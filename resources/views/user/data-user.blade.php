@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src=./assets-pio/img/logo-dc.png>
                                 </div>
                             </div>
                         </div>
@@ -60,57 +60,86 @@
                                         </li>
                                     </ul>
 
-                                    @if (Session::get('success'))
-                                        <div class="alert alert-success alert-dismissible show fade my-4">
-                                            {{ Session::get('success') }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                    @endif
-
                                     <div class="tab-content my-4" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                             aria-labelledby="home-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Level</th>
-                                                            <th>Nama</th>
-                                                            <th>Username</th>
-                                                            <th>No. Hp</th>
-                                                            <th>Status</th>
-                                                            <th>Saldo</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($allUsers as $user)
+                                            @if (count($allUsers) > 0)
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-0" id="data-user">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $user->role }}</td>
-                                                                <td>{{ $user->name }}</td>
-                                                                <td>{{ $user->username }}</td>
-                                                                <td>{{ $user->no_hp }}</td>
-                                                                <td><span class="badge bg-success">Active</span></td>
-                                                                <td>{{ $user->saldo }}</td>
-                                                                <td>
-                                                                    <form action="{{ '/data-user/' . $user->id }}" onsubmit="return confirm('Yakin ingin hapus data ?')"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit "
-                                                                            class="btn btn-sm btn-outline-danger">
-                                                                            <i class="bi bi-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
+                                                                <th>No</th>
+                                                                <th>Level</th>
+                                                                <th>Nama</th>
+                                                                <th>Username</th>
+                                                                <th>No. Hp</th>
+                                                                <th>Status</th>
+                                                                <th>Saldo</th>
+                                                                <th>Point</th>
+                                                                <th>Transaksi</th>
+                                                                <th>Tgl. Daftar</th>
+                                                                <th>Tgl. Expired</th>
+                                                                <th>Aksi</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($allUsers as $user)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>
+                                                                        @if ($user->role == 'resseler')
+                                                                            Resseler
+                                                                        @elseif ($user->role == 'admin')
+                                                                            Admin
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $user->name }}</td>
+                                                                    <td>{{ $user->username }}</td>
+                                                                    <td>{{ $user->no_hp }}</td>
+                                                                    <td>
+                                                                        @if (strtotime($user->expired_date) > time())
+                                                                            <span class="badge bg-danger">TIDAK
+                                                                                AKTIF</span>
+                                                                        @else
+                                                                            <span class="badge bg-success">AKTIF</span>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($user->saldo >= 10000000)
+                                                                            Unlimited
+                                                                        @else
+                                                                            {{ number_format($user->saldo, 0, ',', '.') }}
+                                                                        @endif
+                                                                        {{-- {{ number_format($user->saldo, 0, ',', '.') }} --}}
+                                                                    </td>
+                                                                    <td>{{ number_format($user->point, 0, ',', '.') }}
+                                                                    </td>
+                                                                    <td>{{ number_format($user->transaksi, 0, ',', '.') }}
+                                                                    </td>
+                                                                    <td>{{ $user->created_at }}</td>
+                                                                    <td>{{ $user->expired_date }}</td>
+                                                                    <td>
+                                                                        <form action="{{ '/data-user/' . $user->id }}"
+                                                                            method="POST" class="delete-form">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="btn btn-sm btn-outline-danger"
+                                                                                data-confirm-delete="true">
+                                                                                <i class="bi bi-trash"></i>
+                                                                            </button>
+                                                                        </form>
+
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <h1>Data kosong</h1>
+                                            @endif
+
                                         </div>
                                         <div class="tab-pane fade" id="profile" role="tabpanel"
                                             aria-labelledby="profile-tab">
@@ -167,10 +196,10 @@
                                                                         <option value="" selected>Pilih level
                                                                         </option>
 
-                                                                        <option>Resseler</option>
+                                                                        <option value="resseler">Resseler</option>
 
                                                                         @if (Auth::user()->role == 'ceo')
-                                                                            <option>Admin</option>
+                                                                            <option value="admin">Admin</option>
                                                                         @endif
 
                                                                     </select>
@@ -187,12 +216,184 @@
 
                                                 <hr class="my-4 d-block d-md-none">
 
-                                                {{-- RIWAYAT TRANSAKSI --}}
                                                 <div class="col-lg-6">
+                                                    {{-- CARD SELESAI TAMBAH USER --}}
+                                                    @if (Session::get('success-pendaftaran'))
+                                                        <div class="card mb-0" id="card-screenshot"
+                                                            data-aos="zoom-in" data-aos-duration="1000">
+                                                            {{-- <div class="card-header">
+                                                                <h4 class="card-title"><i
+                                                                        class="bi bi-check2-all me-2"></i>Devil Cheat -
+                                                                    Pembelian Cheat</h4>
+                                                            </div> --}}
+                                                            <div class="card-content">
+                                                                <div class="card-body pb-0">
+                                                                    <div
+                                                                        class="alert alert-light-success color-success">
+                                                                        <i class="bi bi-check-circle me-2"></i>Devil
+                                                                        Cheat - Pendaftaran akun.
+                                                                    </div>
+                                                                    <div class="list-group">
+
+                                                                        <ul class="list-group">
+
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-4">
+                                                                                        <i
+                                                                                            class="bi bi-person-vcard me-1"></i>
+                                                                                        Nama
+                                                                                    </div>
+                                                                                    <div class="col-8 text-end">
+                                                                                        {{ session('data.name') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i
+                                                                                            class="bi bi-person-circle me-1"></i>
+                                                                                        Username
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        {{ session('data.username') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i
+                                                                                            class="bi bi-controller me-1"></i>
+                                                                                        Password
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        {{ session('data.password') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-3">
+                                                                                        <i
+                                                                                            class="bi bi-database me-1"></i>
+                                                                                        Level
+                                                                                    </div>
+                                                                                    <div class="col-9 text-end">
+                                                                                        {{ session('data.role') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i
+                                                                                            class="bi bi-box-seam me-1"></i>
+                                                                                        Nomor Hp
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        {{ session('data.no_hp') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i class="bi bi-coin me-1"></i>
+                                                                                        Tgl. Daftar
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        {{ session('data.created_at') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+
+                                                                            <li class="list-group-item">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i
+                                                                                            class="bi bi-calendar-event me-1"></i>
+                                                                                        Oleh
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        {{ Auth::user()->name }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="list-group-item mb-2">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <i
+                                                                                            class="bi bi-calendar-x me-1"></i>
+                                                                                        Link login
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        https://www.xnxx.com/
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+
+                                                                            <p>Terima kasih sudah daftar ❤</p>
+                                                                            <p>Demi keamanan dan tidak adanya salah
+                                                                                paham, segera login dan ubah password.
+                                                                            </p>
+                                                                            <p>Login member <a
+                                                                                    href="http://www.instagram.com/pio_razorr">http://www.instagram.com/pio_razorr</a>
+                                                                            </p>
+
+                                                                        </ul>
+
+                                                                        {{-- <p class="text-center">Tidak ada riwayat.</p>
+
+                                                                        <a href="#"
+                                                                            class="list-group-item list-group-item-action active">
+                                                                            <div
+                                                                                class="d-flex w-100 justify-content-between">
+                                                                                <h5 class="mb-1 text-white">
+                                                                                    {{ $authUser->name }}</h5>
+                                                                                <small>3 days ago</small>
+                                                                            </div>
+                                                                            <p class="mb-1">
+                                                                                {{ $authUser->name }} melakukan
+                                                                                pembelian paket Point Blank Zepetto 1
+                                                                                Hari.
+                                                                            </p>
+                                                                        </a> --}}
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-content">
+                                                                <div class="card-body pt-0">
+                                                                    <p><b class="fs-italic">Screenshot bukti
+                                                                            pendaftaran ini dan berikan
+                                                                            kepada pembeli sebagai bukti
+                                                                            valid.</b></p>
+                                                                    <div id="preview-container" class="d-none"></div>
+                                                                    <button class="btn btn-primary btn-sm"
+                                                                        id="capture-button">Screenshot</button>
+                                                                    <a id="download-button"
+                                                                        class="btn btn-success btn-sm d-none">Download
+                                                                        screenshot</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                    {{-- CARD SELESAI TAMBAH USER --}}
+                                                </div>
+
+                                                {{-- RIWAYAT TRANSAKSI --}}
+                                                {{-- <div class="col-lg-6">
                                                     <h4 class="card-title mb-4">Riwayat terakhir</h4>
                                                     <div class="list-group">
 
-                                                        {{-- <p class="text-center">Tidak ada riwayat.</p> --}}
+                                                        <p class="text-center">Tidak ada riwayat.</p>
 
                                                         <a href="#"
                                                             class="list-group-item list-group-item-action active">
@@ -208,7 +409,7 @@
                                                         </a>
 
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 {{-- END RIWAYAT TRANSAKSI --}}
                                             </div>
 
@@ -217,71 +418,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-                    {{-- <div class="col-12 col-lg-3">
-                        <div class="card">
-                            <div class="card-body py-4 px-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-xl">
-                                        <img src="./assets/compiled/jpg/1.jpg" alt="Face 1">
-                                    </div>
-                                    <div class="ms-3 name">
-                                        <h5 class="font-bold">John Duck</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Recent Messages</h4>
-                            </div>
-                            <div class="card-content pb-4">
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/4.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Hank Schrader</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/5.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Dean Winchester</h5>
-                                        <h6 class="text-muted mb-0">@imdean</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/1.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">John Dodol</h5>
-                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
-                                    </div>
-                                </div>
-                                <div class="px-4">
-                                    <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Start
-                                        Conversation</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Visitors Profile</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-visitors-profile"></div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                 </section>
             </div>
 
@@ -291,6 +428,64 @@
     </div>
 
     @include('layout.script')
+
+    @include('sweetalert::alert')
+
+    {{-- Inisialisasi DataTable --}}
+    <script>
+        $(document).ready(function() {
+            $('#data-user').DataTable();
+        });
+    </script>
+
+    {{-- Sweet alert konfirmasi tombol hapus --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const deleteForms = document.querySelectorAll(".delete-form");
+
+            deleteForms.forEach((form) => {
+                form.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: "Anda yakin ?",
+                        text: "Data user akan dihapus secara permanen",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, hapus !"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form
+                                .submit(); // Lanjutkan dengan mengirimkan formulir jika pengguna mengonfirmasi
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    {{-- HTML2 Canvas screenshot --}}
+    <script>
+        const container = document.getElementById("card-screenshot");
+        const captureButton = document.getElementById("capture-button");
+        const previewContainer = document.getElementById("preview-container");
+        const downloadButton = document.getElementById("download-button");
+
+        captureButton.addEventListener("click", async () => {
+            downloadButton.classList.remove("d-none");
+            const canvas = await html2canvas(container);
+            const imageURL = canvas.toDataURL();
+            previewContainer.innerHTML = `<img src="${imageURL}" id="image">`;
+            downloadButton.href = imageURL;
+            downloadButton.download = "image.png";
+        });
+
+        window.onload = () => {
+            downloadButton.classList.add("d-none");
+            previewContainer.innerHTML = "";
+        };
+    </script>
 
     <script>
         AOS.init();

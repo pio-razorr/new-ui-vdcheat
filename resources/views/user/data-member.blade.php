@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -24,12 +24,12 @@
                     <div class="col-6 d-flex justify-content-end">
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
-                                <h6 class="mb-0 text-gray-600">{{$authUser->name}}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{$authUser->role}}</p>
+                                <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
+                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -62,145 +62,147 @@
                                     <div class="tab-content my-4" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                             aria-labelledby="home-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Member Id</th>
-                                                            <th>Serial</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($members as $member)
+
+                                            {{-- MEMBER SERIAL --}}
+                                            @php
+                                                $SerialMembers = $members->where('game', '!=', 'Mobile Legends');
+                                                $SerialNo = 1;
+                                            @endphp
+                                            @if (count($SerialMembers) > 0)
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-0" id="member-serial">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $member->name }}</td>
-                                                                <td>{{ $member->member_id }}</td>
-                                                                <td>{{ $member->serial }}</td>
-                                                                <td>
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-info">
-                                                                        <i class="bi bi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-danger">
-                                                                        <i class="bi bi-trash"></i>
-                                                                    </button>
-                                                                </td>
+                                                                <th>No</th>
+                                                                <th>Game</th>
+                                                                <th>Member Key</th>
+                                                                <th>Nama</th>
+                                                                <th>Serial</th>
+                                                                <th>Status</th>
+                                                                <th>Tgl. Transaksi</th>
+                                                                <th>Tgl. Expired</th>
+                                                                <th>Aksi</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($members as $member)
+                                                                @if ($member->game != 'Mobile Legends')
+                                                                    <tr>
+                                                                        <td>{{ $SerialNo++ }}</td>
+                                                                        <td>{{ $member->game }}</td>
+                                                                        <td>{{ $member->member_id }}</td>
+                                                                        <td>{{ $member->name }}</td>
+                                                                        <td>{{ $member->serial }}</td>
+                                                                        <td>
+                                                                            @if (strtotime($member->expired_date) < time())
+                                                                                <span class="badge bg-danger">TIDAK
+                                                                                    AKTIF</span>
+                                                                            @else
+                                                                                <span
+                                                                                    class="badge bg-success">AKTIF</span>
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>{{ $member->created_at }}</td>
+                                                                        <td>{{ $member->expired_date }}</td>
+                                                                        <td>
+                                                                            <div class="d-flex">
+                                                                                <a href="{{ '/ubah-serial/' . $member->id . '/edit' }}"
+                                                                                    class="btn icon btn-sm btn-primary me-2">
+                                                                                    <i class="bi bi-pencil"></i>
+                                                                                </a>
+                                                                                <form
+                                                                                    action="{{ '/data-member/' . $member->id }}"
+                                                                                    method="POST" class="delete-form">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="btn icon btn-sm btn-danger">
+                                                                                        <i class="bi bi-trash"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <h1>Data kosong</h1>
+                                            @endif
+                                            {{-- END MEMBER SERIAL --}}
                                         </div>
+
                                         <div class="tab-pane fade" id="profile" role="tabpanel"
                                             aria-labelledby="profile-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Member Id</th>
-                                                            <th>Serial</th>
-                                                            <th>Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($members as $member)
+
+                                            {{-- MEMBER NON SERIAL --}}
+                                            @php
+                                                $nonSerialMembers = $members->where('game', 'Mobile Legends');
+                                                $nonSerialNo = 1;
+                                            @endphp
+                                            @if (count($nonSerialMembers) > 0)
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-0" id="member-non-serial">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $member->name }}</td>
-                                                                <td>{{ $member->member_id }}</td>
-                                                                <td>{{ $member->serial }}</td>
-                                                                <td>
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-info">
-                                                                        <i class="bi bi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-danger">
-                                                                        <i class="bi bi-trash"></i>
-                                                                    </button>
-                                                                </td>
+                                                                <th>No</th>
+                                                                <th>Game</th>
+                                                                <th>Member Key</th>
+                                                                <th>Nama</th>
+                                                                <th>Status</th>
+                                                                <th>Tgl. Transaksi</th>
+                                                                <th>Tgl. Expired</th>
+                                                                <th>Aksi</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($members->where('game', 'Mobile Legends') as $member)
+                                                                <tr>
+                                                                    <td>{{ $nonSerialNo++ }}</td>
+                                                                    <td>{{ $member->game }}</td>
+                                                                    <td>{{ $member->member_id }}</td>
+                                                                    <td>{{ $member->name }}</td>
+                                                                    <td>
+                                                                        @if (strtotime($member->expired_date) < time())
+                                                                            <span class="badge bg-danger">TIDAK
+                                                                                AKTIF</span>
+                                                                        @else
+                                                                            <span class="badge bg-success">AKTIF</span>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $member->created_at }}</td>
+                                                                    <td>{{ $member->expired_date }}</td>
+                                                                    <td>
+                                                                        <div class="d-flex">
+                                                                            <form
+                                                                                action="{{ '/data-member/' . $member->id }}"
+                                                                                method="POST" class="delete-form">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn icon btn-sm btn-danger">
+                                                                                    <i class="bi bi-trash"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <h1>Data kosong</h1>
+                                            @endif
+                                            {{-- END MEMBER NON SERIAL --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-                    {{-- <div class="col-12 col-lg-3">
-                        <div class="card">
-                            <div class="card-body py-4 px-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-xl">
-                                        <img src="./assets/compiled/jpg/1.jpg" alt="Face 1">
-                                    </div>
-                                    <div class="ms-3 name">
-                                        <h5 class="font-bold">John Duck</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Recent Messages</h4>
-                            </div>
-                            <div class="card-content pb-4">
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/4.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Hank Schrader</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/5.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Dean Winchester</h5>
-                                        <h6 class="text-muted mb-0">@imdean</h6>
-                                    </div>
-                                </div>
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="./assets/compiled/jpg/1.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">John Dodol</h5>
-                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
-                                    </div>
-                                </div>
-                                <div class="px-4">
-                                    <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Start
-                                        Conversation</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Visitors Profile</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-visitors-profile"></div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                 </section>
             </div>
 
@@ -210,6 +212,46 @@
     </div>
 
     @include('layout.script')
+
+    @include('sweetalert::alert')
+
+    {{-- Inisialisasi DataTable --}}
+    <script>
+        $(document).ready(function() {
+            $('#member-serial').DataTable();
+        });
+
+        $(document).ready(function() {
+            $('#member-non-serial').DataTable();
+        });
+    </script>
+
+    {{-- Sweet alert konfirmasi tombol hapus --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const deleteForms = document.querySelectorAll(".delete-form");
+
+            deleteForms.forEach((form) => {
+                form.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: "Anda yakin ?",
+                        text: "Data member akan dihapus secara permanen",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, hapus !"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form
+                                .submit(); // Lanjutkan dengan mengirimkan formulir jika pengguna mengonfirmasi
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
     <script>
         AOS.init();

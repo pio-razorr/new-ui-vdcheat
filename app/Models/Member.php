@@ -19,18 +19,21 @@ class Member extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'game',
         'member_id',
-        'serial'
+        'serial',
+        'expired_date',
+        'created_by'
     ];
+
+    public $timestamps = true;
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast.
@@ -40,4 +43,17 @@ class Member extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime'
     ];
+
+    public static function check($member_id)
+    {
+
+        $member = Member::find($member_id);
+
+        if ($member) {
+            return $member;
+        } else {
+            return false;
+        }
+
+    }
 }

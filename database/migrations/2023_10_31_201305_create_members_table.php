@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('member_id');
-            $table->string('serial');
-            $table->timestammps();
+            $table->string('game');
+            $table->string('member_id')->nullable();
+            $table->string('serial')->nullable();
+            $table->datetime('expired_date');
+            $table->string('created_by');
+            $table->timestamps();
         });
     }
 

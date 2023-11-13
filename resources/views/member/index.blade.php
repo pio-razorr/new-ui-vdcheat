@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                                     Game
                                                 </div>
                                                 <div class="col-6 text-end">
-                                                    Point Blank
+                                                    {{ $authMember->game }}
                                                 </div>
                                             </div>
                                         </li>
@@ -106,7 +106,11 @@
                                                     Status
                                                 </div>
                                                 <div class="col-6 text-end">
-                                                    <span class="badge bg-success">AKTIF</span>
+                                                    @if (strtotime($authMember->expired_date) < time())
+                                                        <span class="badge bg-danger">TIDAK AKTIF</span>
+                                                    @else
+                                                        <span class="badge bg-success">AKTIF</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </li>
@@ -117,7 +121,7 @@
                                                     Tgl. Expired
                                                 </div>
                                                 <div class="col-6 text-end">
-                                                    30/Oktober/2023 16:03:05
+                                                    {{ $authMember->expired_date }}
                                                 </div>
                                             </div>
                                         </li>
@@ -129,25 +133,30 @@
                                                     Sisa Durasi
                                                 </div>
                                                 <div class="col-6 text-end">
-                                                    22 Jam
+                                                    @if (strtotime($authMember->expired_date) < time())
+                                                        -
+                                                    @else
+                                                        {{ $remainingDuration }}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <i class="bi bi-database me-1"></i>
-                                                    Serial Aktif
+                                        @if ($authMember->game == 'Point Blank Zepetto' || $authMember->game == 'Point Blank Private')
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <i class="bi bi-database me-1"></i>
+                                                        Serial Aktif
+                                                    </div>
+                                                    <div class="col-6 text-end">
+                                                        {{ $authMember->serial }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-6 text-end">
-                                                    {{$authMember->serial}}
-                                                </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        @endif
 
                                     </ul>
                                 </div>
-                                {{-- <img class="img-fluid w-100" src="./assets/compiled/jpg/banana.jpg" alt="Card image cap"> --}}
                             </div>
                             {{-- <div class="card-footer d-flex justify-content-between">
                                     <span>Card Footer</span>
@@ -169,7 +178,7 @@
                                             <div class="form-group">
                                                 <label for="kode-voucher" class="sr-only">Kode Voucher</label>
                                                 <input type="text" id="kode-voucher" class="form-control"
-                                                    placeholder="Masukkan Kode Voucher" name="kode-voucher">
+                                                    placeholder="Masukkan Kode Voucher" name="kode-voucher" disabled>
                                             </div>
                                         </div>
                                         <div class="form-actions">
@@ -231,62 +240,53 @@
 
                                     </ul>
                                 </div>
-                                {{-- <img class="img-fluid w-100" src="./assets/compiled/jpg/banana.jpg" alt="Card image cap"> --}}
                             </div>
                             {{-- <div class="card-footer d-flex justify-content-between">
-                                                                        <span>Card Footer</span>
-                                                                        <button class="btn btn-light-primary">Read More</button>
-                                                                    </div> --}}
+                                <span>Card Footer</span>
+                                <button class="btn btn-light-primary">Read More</button>
+                            </div> --}}
                         </div>
                         {{-- END STATUS CHEAT --}}
 
                         {{-- UBAH SERIAL --}}
-                        <div class="card" data-aos="zoom-in">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title mb-4">Ubah Serial</h4>
-                                    <p class="card-text">
-                                        Ubah serial digunakan jika Anda ingin menggunakan cheat pada perangkat PC yang
-                                        berbeda.
-                                    </p>
+                        @if ($authMember->game == 'Point Blank Zepetto' || $authMember->game == 'Point Blank Private')
+                            <div class="card" data-aos="zoom-in">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Ubah Serial</h4>
+                                        <p class="card-text">
+                                            Ubah serial digunakan jika Anda ingin menggunakan cheat pada perangkat PC
+                                            yang
+                                            berbeda.
+                                        </p>
 
-                                    @if (Session::get('success'))
-                                        <div class="alert alert-success alert-dismissible show fade my-4">
-                                            {{ Session::get('success') }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                    @endif
-
-                                    <form class="form" action="{{ '/dashboard-member/' . $authMember->id }}"
-                                        method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <label for="serial-aktif">Serial aktif</label>
-                                                <input type="text" class="form-control" id="serial-aktif"
-                                                    placeholder="{{ $authMember->serial }}" disabled="">
+                                        <form class="form" action="{{ '/dashboard-member/' . $authMember->id }}"
+                                            method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label for="serial-aktif">Serial aktif</label>
+                                                    <input type="text" class="form-control" id="serial-aktif"
+                                                        placeholder="{{ $authMember->serial }}" disabled="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="serial-baru" class="sr-only">Serial baru</label>
+                                                    <input type="text" id="serial-baru" class="form-control"
+                                                        placeholder="Masukkan Serial Baru" name="serial" required>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="serial-baru" class="sr-only">Serial baru</label>
-                                                <input type="text" id="serial-baru" class="form-control"
-                                                    placeholder="Masukkan Serial Baru" name="serial" required>
+                                            <div class="form-actions">
+                                                <button type="submit" class="btn btn-primary me-1">Ubah</button>
                                             </div>
-                                        </div>
-                                        <div class="form-actions">
-                                            <p>Sisa ubah : <b>99 X</b></p>
-                                            <button type="submit" class="btn btn-primary me-1">Submit</button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         {{-- END UBAH SERIAL --}}
+
                     </div>
-
-
-
 
                 </section>
             </div>
@@ -297,6 +297,8 @@
     </div>
 
     @include('layout.script')
+
+    @include('sweetalert::alert')
 
     <script>
         AOS.init();

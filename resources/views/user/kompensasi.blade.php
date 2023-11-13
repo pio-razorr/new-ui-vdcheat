@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                     {{-- END CARD KOMPENSASI DURASI --}}
 
                     {{-- RIWAYAT TRANSAKSI --}}
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="card" data-aos="zoom-in" data-aos-duration="1000">
                             <div class="card-header">
                                 <h4 class="card-title">Riwayat terakhir</h4>
@@ -93,7 +93,7 @@
                                 <div class="card-body pt-0">
                                     <div class="list-group">
 
-                                        {{-- <p class="text-center">Tidak ada riwayat.</p> --}}
+                                        <p class="text-center">Tidak ada riwayat.</p>
 
                                         <a href="#" class="list-group-item list-group-item-action active">
                                             <div class="d-flex w-100 justify-content-between">
@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- END RIWAYAT TRANSAKSI --}}
 
                 </section>

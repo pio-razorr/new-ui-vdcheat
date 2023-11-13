@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                     {{-- CARD TUKAR POINT --}}
 
                     {{-- RIWAYAT TRANSAKSI --}}
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="card" data-aos="zoom-in" data-aos-duration="1000">
                             <div class="card-header">
                                 <h4 class="card-title">Riwayat terakhir</h4>
@@ -88,7 +88,7 @@
 
                                         <p class="text-center">Tidak ada riwayat.</p>
 
-                                        {{-- <a href="#" class="list-group-item list-group-item-action active">
+                                        <a href="#" class="list-group-item list-group-item-action active">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h5 class="mb-1 text-white">Point Blank Zepetto</h5>
                                                 <small>3 days ago</small>
@@ -97,13 +97,13 @@
                                                 Anda telah melakukan perpanjangan paket 3 hari dengan member id
                                                 ML-51325324
                                             </p>
-                                        </a> --}}
+                                        </a>
                                         
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- END RIWAYAT TRANSAKSI --}}
 
                 </section>

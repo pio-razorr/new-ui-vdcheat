@@ -15,44 +15,38 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Data pengguna yang akan diisi ke dalam database
         $userData = [
             [
                 'name' => 'akun resseler',
                 'username' => 'resseler',
-                'no_hp' => '0987654321',
-                'password' => Hash::make('123456'),
+                'no_hp' => '082225955550',
+                'password' => Hash::make('123456'), // Menggunakan Hash untuk mengenkripsi kata sandi
                 'role' => 'resseler',
-                'saldo' => '150.000',
-                'transaksi' => '13',
-                'point' => '43.000',
-                'pendapatan' => '50.000'
+                'saldo' => '150000',
+                'created_by' => 'admin',
             ],
-
             [
                 'name' => 'akun admin',
                 'username' => 'admin',
-                'no_hp' => '0987654321',
-                'password' => Hash::make('123456'),
+                'no_hp' => '082260025001',
+                'password' => Hash::make('123456'), // Menggunakan Hash untuk mengenkripsi kata sandi
                 'role' => 'admin',
-                'saldo' => '999.999.999',
-                'transaksi' => '31',
-                'point' => '73.000',
-                'pendapatan' => '500.000'
+                'saldo' => '999999999999',
+                'created_by' => 'ceo',
             ],
-
             [
                 'name' => 'akun ceo',
                 'username' => 'ceo',
-                'no_hp' => '0987654321',
-                'password' => Hash::make('123456'),
+                'no_hp' => '0822200000230',
+                'password' => Hash::make('123456'), // Menggunakan Hash untuk mengenkripsi kata sandi
                 'role' => 'ceo',
-                'saldo' => '999.999.999',
-                'transaksi' => '130',
-                'point' => '433.000',
-                'pendapatan' => '560.000'
+                'saldo' => '999999999999',
+                'created_by' => 'author',
             ],
         ];
 
+        // Melakukan iterasi (perulangan) data pengguna dan menyimpannya ke dalam tabel 'users' dalam database
         foreach ($userData as $key => $val) {
             User::create($val);
         }

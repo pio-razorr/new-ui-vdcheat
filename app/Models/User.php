@@ -21,10 +21,16 @@ class User extends Authenticatable
         'name',
         'username',
         'no_hp',
+        'password',
         'role',
         'saldo',
-        'password',
+        'transaksi',
+        'point',
+        'pendapatan',
+        'created_by'
     ];
+
+    public $timestamps = true;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,10 +52,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $attributes = [
-        'saldo' => '0',
-        'transaksi' => '0',
-        'point' => '0',
-        'pendapatan' => '0'
-    ];
+    public function setTransaksiAttribute($value)
+    {
+        $this->attributes['transaksi'] = $value + 1;
+    }
 }

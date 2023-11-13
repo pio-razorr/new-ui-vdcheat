@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg">
+                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -51,17 +51,23 @@
                                         admin.
                                     </p>
                                     <hr>
-                                    <form class="form" method="post">
+                                    <form class="form" action="/ganti-password" method="post">
+                                        @csrf
                                         <div class="form-body">
                                             <div class="form-group">
                                                 <label for="password-lama" class="sr-only">Password lama</label>
                                                 <input type="text" id="password-lama" class="form-control"
-                                                    placeholder="Masukkan password lama" name="LastName">
+                                                    placeholder="Masukkan password lama" value="{{ old('password_lama') }}" name="password_lama" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="password-baru" class="sr-only">Password baru</label>
                                                 <input type="text" id="password-baru" class="form-control"
-                                                    placeholder="Masukkan password lama" name="LastName">
+                                                    placeholder="Masukkan password baru" value="{{ old('password_baru') }}" name="password_baru" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ulangi-password-baru" class="sr-only">Ulangi password baru</label>
+                                                <input type="text" id="ulangi-password-baru" class="form-control"
+                                                    placeholder="Masukkan password lama" value="{{ old('ulangi_password_baru') }}" name="ulangi_password_baru" required>
                                             </div>
                                         </div>
                                         <div class="form-actions mt-4">
@@ -75,7 +81,7 @@
                     {{-- END CARD GANTI PASSWORD --}}
 
                     {{-- RIWAYAT TRANSAKSI --}}
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="card" data-aos="zoom-in" data-aos-duration="1000">
                             <div class="card-header">
                                 <h4 class="card-title">Riwayat terakhir</h4>
@@ -84,7 +90,7 @@
                                 <div class="card-body pt-0">
                                     <div class="list-group">
 
-                                        {{-- <p class="text-center">Tidak ada riwayat.</p> --}}
+                                        <p class="text-center">Tidak ada riwayat.</p>
 
                                         <a href="#" class="list-group-item list-group-item-action active">
                                             <div class="d-flex w-100 justify-content-between">
@@ -101,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- END RIWAYAT TRANSAKSI --}}
 
                 </section>
@@ -114,6 +120,8 @@
     </div>
 
     @include('layout.script')
+
+    @include('sweetalert::alert')
 
     <script>
         AOS.init();

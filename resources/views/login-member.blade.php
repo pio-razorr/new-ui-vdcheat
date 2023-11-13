@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         {{-- @include('layout.sidebar') --}}
@@ -13,7 +13,7 @@
 
             <div class="container">
                 <section class="row d-flex justify-content-center">
-                    <div class="col-md-6 col-lg-5">
+                    <div class="col-md-7 col-lg-5 col-xl-5">
                         <div class="card m-0" data-aos="zoom-in">
                             <div class="card-content">
                                 <div class="card-body">
@@ -55,7 +55,8 @@
                                     {{-- End toggle dark mode --}}
 
                                     <div class="d-flex justify-content-center">
-                                        <img src="assets-pio/img/logo-dc.png" alt="" class="img-fluid w-25">
+                                        <img src="{{ asset('assets-pio/img/logo-dc.png') }}" alt=""
+                                            class="img-fluid w-25">
                                     </div>
 
                                     <h4 class="card-title text-center">Member Login</h4>
@@ -78,13 +79,15 @@
                                             <div class="form-group">
                                                 <label for="member-id" class="sr-only">Member id</label>
                                                 <input type="text" id="member_id" class="form-control"
-                                                    placeholder="Masukkan member id" value="{{ old('member_id')}}" name="member_id" required>
+                                                    placeholder="Masukkan member id" value="{{ old('member_id') }}"
+                                                    name="member_id" required>
                                             </div>
 
                                         </div>
 
                                         <div class="form-actions d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary w-100" name="submit">Login</button>
+                                            <button type="submit" class="btn btn-primary w-100"
+                                                name="submit">Login</button>
                                         </div>
 
                                         <div>

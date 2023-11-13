@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
     <div id="app">
 
         {{-- @include('layout.sidebar') --}}
@@ -13,7 +13,7 @@
 
             <div class="container">
                 <section class="row d-flex justify-content-center">
-                    <div class="col-md-6 col-lg-5">
+                    <div class="col-md-7 col-lg-5 col-xl-5">
                         <div class="card m-0" data-aos="zoom-in">
                             <div class="card-content">
                                 <div class="card-body">
@@ -53,9 +53,9 @@
                                         </svg>
                                     </div>
                                     {{-- End toggle dark mode --}}
-
+                                    
                                     <div class="d-flex justify-content-center">
-                                        <img src="assets-pio/img/logo-dc.png" alt="" class="img-fluid w-25">
+                                        <img src="{{asset('assets-pio/img/logo-dc.png')}}" alt="" class="img-fluid w-25">
                                     </div>
 
                                     <h4 class="card-title text-center">Seller Login</h4>
@@ -84,6 +84,7 @@
 
                                             <div class="form-group">
                                                 <label for="password" class="sr-only">Password</label>
+                                                <span class="float-end"><a href="https://wa.link/wgu8y5">Forgot password ?</a></span>
                                                 <input type="password" id="password" class="form-control"
                                                     placeholder="Masukkan password" name="password"
                                                     value="{{ old('password') }}" required>
