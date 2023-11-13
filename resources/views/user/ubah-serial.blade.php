@@ -45,9 +45,9 @@
                             <div class="card" data-aos="zoom-in" data-aos-duration="500">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <h4 class="card-title">Ubah Serial Member</h4>
+                                        <h4 class="card-title">Informasi</h4>
                                         <p class="card-text">
-                                            Tingki wingki dibsi lala asep :v
+                                            Cek terlebih dahulu apakah data member yang akan dirubah sudah betul atau belum.
                                         </p>
 
                                         <form class="form" action="{{ '/ubah-serial/' . $data->id }}" method="post">
@@ -57,19 +57,19 @@
                                                 <div class="form-group">
                                                     <label for="name" class="sr-only">Name</label>
                                                     <input type="text" id="name" class="form-control"
-                                                        placeholder="tingki wingki dibsi lala asep" name="name"
+                                                        placeholder="" name="name"
                                                         value="{{ $data->name }}" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="game" class="sr-only">Game</label>
                                                     <input type="text" id="game" class="form-control"
-                                                        placeholder="tingki wingki dibsi lala asep" name="game"
+                                                        placeholder="" name="game"
                                                         value="{{ $data->game }}" disabled>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="serial" class="sr-only">Serial</label>
                                                     <input type="text" id="serial" class="form-control"
-                                                        placeholder="tingki wingki dibsi lala asep" name="serial"
+                                                        placeholder="Masukkan serial" name="serial"
                                                         value="{{ $data->serial }}">
                                                 </div>
                                             </div>

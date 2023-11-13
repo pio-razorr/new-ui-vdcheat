@@ -318,7 +318,7 @@
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item mb-2">
+                                        <li class="list-group-item mb-3">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <i class="bi bi-person me-1"></i>
@@ -499,7 +499,7 @@
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item mb-2">
+                                        <li class="list-group-item mb-3">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <i class="bi bi-person me-1"></i>
