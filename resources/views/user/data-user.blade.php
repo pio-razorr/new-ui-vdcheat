@@ -157,7 +157,7 @@
                                                         dahulu
                                                     </p>
                                                     <hr>
-                                                    <form class="form" action="#" method="post">
+                                                    <form id="tambah-user-form" class="form" action="#" method="post">
                                                         @csrf
                                                         <div class="form-body">
                                                             <div class="row">
@@ -430,6 +430,24 @@
     @include('layout.script')
 
     @include('sweetalert::alert')
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Cek jika ada pesan sukses-pendaftaran, tampilkan tab "Tambah user"
+            if ('{{ Session::get('success-pendaftaran') }}') {
+                // Atur tab "Tambah user" sebagai tab aktif
+                $('#profile-tab').tab('show');
+            }
+
+            // Atur handler untuk form submission
+            $('#tambah-user-form').submit(function() {
+                // Atur tab "Tambah user" sebagai tab aktif setelah formulir dikirim
+                $('#profile-tab').tab('show');
+            });
+        });
+    </script>
 
     {{-- Inisialisasi DataTable --}}
     <script>
