@@ -94,7 +94,7 @@
 
                                         <div class="form-check my-3">
                                             <div class="checkbox">
-                                                <input type="checkbox" class="form-check-input" id="checkbox">
+                                                <input type="checkbox" class="form-check-input" id="checkbox" name="remember">
                                                 <label for="checkbox">Simpan login</label>
                                             </div>
                                         </div>
