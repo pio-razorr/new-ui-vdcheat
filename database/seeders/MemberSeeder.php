@@ -17,6 +17,8 @@ class MemberSeeder extends Seeder
         $currentDate = Carbon::now();
         $expiredDate = $currentDate->addMonth();
 
+        $currentDate2 = Carbon::now();
+
         DB::table('members')->insert(
             [
                 'name' => 'member pio',
@@ -25,6 +27,7 @@ class MemberSeeder extends Seeder
                 'serial' => '787231hfgh2389675t',
                 'expired_date' => $expiredDate,
                 'created_by' => 'ceo',
+                'created_at' => $currentDate2,
             ]
         );
     }

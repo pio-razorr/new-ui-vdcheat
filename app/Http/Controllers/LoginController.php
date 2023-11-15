@@ -31,6 +31,7 @@ class LoginController extends Controller
         ];
 
         if (Auth::guard('web')->attempt($infologin_user)) {
+            session()->flash('login_sukses', 'Login berhasil');
             // Jika autentikasi berhasil, redirect ke dashboard
             return redirect('/dashboard');
         } else {
@@ -64,6 +65,7 @@ class LoginController extends Controller
         }
 
         if (Auth::guard('member')->loginUsingId($member->id)) {
+            session()->flash('login_sukses', 'Login berhasil');
             // Jika autentikasi member berhasil, regenerasi session dan redirect ke halaman yang diinginkan (biasanya dashboard-member)
             $request->session()->regenerate();
             return redirect()->intended('/dashboard-member');

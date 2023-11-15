@@ -19,7 +19,7 @@
     {{-- CSS Data AOS --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Bootstrap CSS (gunakan tema gelap) -->
+    <!-- CSS Datatable -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
     {{-- Datatables responsive --}}

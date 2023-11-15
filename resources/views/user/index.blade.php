@@ -81,7 +81,8 @@
                                                 </div>
                                                 <div>
                                                     <h6 class="text-muted font-semibold">Transaksi</h6>
-                                                    <h6 class="font-extrabold mb-0">{{ number_format($authUser->transaksi, 0, ',', '.') }} Kali</h6>
+                                                    <h6 class="font-extrabold mb-0">
+                                                        {{ number_format($authUser->transaksi, 0, ',', '.') }} Kali</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,6 +476,28 @@
     </div>
 
     @include('layout.script')
+
+    @include('sweetalert::alert')
+
+    @if (session('login_sukses'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Login berhasil"
+            });
+        </script>
+    @endif
 
     <script>
         AOS.init();
