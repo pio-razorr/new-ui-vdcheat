@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src=./assets-pio/img/logo-dc.png>
+                                    <img src=./assets-pio/img/alvin-cheat.png>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
                                                             data-aos="zoom-in" data-aos-duration="1000">
                                                             {{-- <div class="card-header">
                                                                 <h4 class="card-title"><i
-                                                                        class="bi bi-check2-all me-2"></i>Devil Cheat -
+                                                                        class="bi bi-check2-all me-2"></i>Alvin Cheat -
                                                                     Pembelian Cheat</h4>
                                                             </div> --}}
                                                             <div class="card-content">

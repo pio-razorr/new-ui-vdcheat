@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
+                                    <img src={{ asset('assets-pio/img/alvin-cheat.png') }} />
                                 </div>
                             </div>
                         </div>
@@ -102,12 +102,12 @@
                         @if (Session::get('success-transfer-saldo'))
                             <div class="card mb-0" id="card-screenshot" data-aos="zoom-in" data-aos-duration="1000">
                                 {{-- <div class="card-header">
-                            <h4 class="card-title"><i class="bi bi-check2-all me-2"></i>Devil Cheat - Pembelian Cheat</h4>
+                            <h4 class="card-title"><i class="bi bi-check2-all me-2"></i>Alvin Cheat - Pembelian Cheat</h4>
                         </div> --}}
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="alert alert-light-success color-success"><i
-                                                class="bi bi-check-circle me-2"></i>Devil Cheat - Transfer Saldo.
+                                                class="bi bi-check-circle me-2"></i>Alvin Cheat - Transfer Saldo.
                                         </div>
                                         <div class="list-group">
 

@@ -1,7 +1,7 @@
 <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="text-center float-sm-start">
-            <p>2023 &copy; Devil Cheat</p>
+            <p>2023 &copy; Alvin Cheat</p>
         </div>
         <div class="text-center float-sm-end">
             <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>

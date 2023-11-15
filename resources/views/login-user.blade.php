@@ -55,7 +55,7 @@
                                     {{-- End toggle dark mode --}}
                                     
                                     <div class="d-flex justify-content-center">
-                                        <img src="{{asset('assets-pio/img/logo-dc.png')}}" alt="" class="img-fluid w-25">
+                                        <img src="{{asset('assets-pio/img/alvin-cheat.png')}}" alt="" class="img-fluid w-25">
                                     </div>
 
                                     <h4 class="card-title text-center">Seller Login</h4>

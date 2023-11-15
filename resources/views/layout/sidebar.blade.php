@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     {{-- <a href="#"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a> --}}
-                    <h5 class="m-0">Devil Cheat</h5>
+                    <h5 class="m-0">Alvin Cheat</h5>
                 </div>
                 {{-- Toggle dark mode --}}
                 <div class="theme-toggle d-flex gap-2 align-items-center">

@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src={{ asset('assets-pio/img/logo-dc.png') }} />
+                                    <img src={{ asset('assets-pio/img/alvin-cheat.png') }} />
                                 </div>
                             </div>
                         </div>
