@@ -13,7 +13,7 @@
 
             <div class="container">
                 <section class="row d-flex justify-content-center">
-                    <div class="col-md-7 col-lg-5 col-xl-5">
+                    <div class="col-md-7 col-lg-6 col-xl-5 col-xxl-4">
                         <div class="card m-0" data-aos="zoom-in">
                             <div class="card-content">
                                 <div class="card-body">
