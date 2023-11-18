@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -25,19 +26,34 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
+        // Mendapatkan informasi login dari request
         $infologin_user = [
             'username' => $request->username,
             'password' => $request->password
         ];
 
-        if (Auth::guard('web')->attempt($infologin_user)) {
-            session()->flash('login_sukses', 'Login berhasil');
-            // Jika autentikasi berhasil, redirect ke dashboard
-            return redirect('/dashboard');
-        } else {
-            // Jika autentikasi gagal, redirect kembali ke halaman login dengan pesan kesalahan dan data input sebelumnya
-            return redirect('login')->withErrors('')->withInput();
+        // Mendapatkan informasi pengguna berdasarkan username
+        $user = User::where('username', $request->username)->first();
+
+        // Mengecek apakah pengguna ditemukan dan akun masih aktif berdasarkan expired_date
+        if ($user && $user->expired_date && now() < $user->expired_date) {
+            // Jika akun masih aktif, lakukan autentikasi
+            if (Auth::guard('web')->attempt($infologin_user)) {
+                session()->flash('login_sukses', 'Login berhasil');
+                // Jika autentikasi berhasil, redirect ke dashboard
+                return redirect('/dashboard');
+            }
         }
+
+        // Jika username atau password muncul pesan dibawah ini
+        $errorMessage = 'Username dan password salah.';
+        // Jika akun tidak aktif atau autentikasi gagal, atur pesan kesalahan sesuai kondisi
+        if ($user && $user->expired_date && now() >= $user->expired_date) {
+            $errorMessage = 'Akun tidak aktif.';
+        }
+
+        // Redirect kembali ke halaman login dengan pesan kesalahan dan data input sebelumnya
+        return redirect('/login')->withErrors(['login' => $errorMessage])->withInput();
     }
     // END USER
 

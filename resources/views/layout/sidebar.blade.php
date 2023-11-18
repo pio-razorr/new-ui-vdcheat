@@ -128,6 +128,16 @@
                     </li>
                 @endif
 
+                {{-- MENU AKTIVASI USER --}}
+                @if (Auth::user()->role == 'ceo')
+                    <li class="sidebar-item @if (Request::is('aktivasi-user')) active @endif">
+                        <a href="/aktivasi-user" class='sidebar-link'>
+                            <i class="bi bi-person-check"></i>
+                            <span>Aktivasi user</span>
+                        </a>
+                    </li>
+                @endif
+
                 {{-- MENU KOMPENSASI --}}
                 @if (Auth::user()->role == 'ceo')
                     <li class="sidebar-item @if (Request::is('kompensasi')) active @endif">

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
                 'role' => 'resseler',
                 'saldo' => '150000',
                 'created_by' => 'admin',
+                'expired_date' => Carbon::now()->addYears(100),
             ],
             [
                 'name' => 'akun admin',
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
                 'saldo' => '999999999999',
                 'created_by' => 'ceo',
+                'expired_date' => Carbon::now()->addMonths(),
             ],
             [
                 'name' => 'akun ceo',
@@ -43,6 +46,7 @@ class UserSeeder extends Seeder
                 'role' => 'ceo',
                 'saldo' => '999999999999',
                 'created_by' => 'author',
+                'expired_date' => Carbon::now()->addYears(100),
             ],
         ];
 

@@ -87,8 +87,10 @@ class DataUserController extends Controller
         // Jika peran yang dipilih adalah 'admin' atur saldo ke 999999999999
         if ($request->input('role') == 'admin') {
             $data['saldo'] = 999999999999;
+            $data['expired_date'] = Carbon::now()->subDay();
         } elseif ($request->input('role') == 'resseler') {
             $data['saldo'] = 0;
+            $data['expired_date'] = Carbon::now()->addYear(100);
         }
 
         $data['created_at'] = $currentDateTime;

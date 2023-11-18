@@ -29,7 +29,8 @@ class User extends Authenticatable implements CanResetPassword
         'transaksi',
         'point',
         'pendapatan',
-        'created_by'
+        'created_by',
+        'expired_date'
     ];
 
     public $timestamps = true;

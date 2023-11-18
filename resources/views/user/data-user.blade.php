@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src=./assets-pio/img/alvin-cheat.png>
+                                    <img src={{ asset('assets-pio/img/alvin-cheat.png') }}>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,9 @@
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>
-                                                                        @if ($user->role == 'resseler')
+                                                                        @if ($user->role == 'resseler' && $user->expired_date && \Carbon\Carbon::parse($user->expired_date)->year <= 2100)
+                                                                            Resseler VIP
+                                                                        @elseif ($user->role == 'resseler')
                                                                             Resseler
                                                                         @elseif ($user->role == 'admin')
                                                                             Admin
@@ -97,13 +99,19 @@
                                                                     <td>{{ $user->username }}</td>
                                                                     <td>{{ $user->no_hp }}</td>
                                                                     <td>
-                                                                        @if (strtotime($user->expired_date) > time())
-                                                                            <span class="badge bg-danger">TIDAK
-                                                                                AKTIF</span>
-                                                                        @else
+                                                                        @if ($user->role == 'resseler')
                                                                             <span class="badge bg-success">AKTIF</span>
+                                                                        @elseif ($user->role == 'admin')
+                                                                            @if (strtotime($user->expired_date) < time())
+                                                                                <span class="badge bg-danger">TIDAK
+                                                                                    AKTIF</span>
+                                                                            @else
+                                                                                <span
+                                                                                    class="badge bg-success">AKTIF</span>
+                                                                            @endif
                                                                         @endif
                                                                     </td>
+
                                                                     <td>
                                                                         @if ($user->saldo >= 10000000)
                                                                             Unlimited
@@ -117,7 +125,13 @@
                                                                     <td>{{ number_format($user->transaksi, 0, ',', '.') }}
                                                                     </td>
                                                                     <td>{{ $user->created_at }}</td>
-                                                                    <td>{{ $user->expired_date }}</td>
+                                                                    <td>
+                                                                        @if ($user->role && $user->expired_date && \Carbon\Carbon::parse($user->expired_date)->year <= 2100)
+                                                                            {{ $user->expired_date }}
+                                                                        @else
+                                                                            <p class="text-center mb-0">-</p>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <form action="{{ '/data-user/' . $user->id }}"
                                                                             method="POST" class="delete-form">
@@ -157,7 +171,8 @@
                                                         dahulu
                                                     </p>
                                                     <hr>
-                                                    <form id="tambah-user-form" class="form" action="#" method="post">
+                                                    <form id="tambah-user-form" class="form" action="#"
+                                                        method="post">
                                                         @csrf
                                                         <div class="form-body">
                                                             <div class="row">

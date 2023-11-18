@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         {{-- @include('layout.sidebar') --}}
@@ -53,7 +53,7 @@
                                         </svg>
                                     </div>
                                     {{-- End toggle dark mode --}}
-                                    
+
                                     <div class="d-flex justify-content-center">
                                         <img src="{{asset('assets-pio/img/alvin-cheat.png')}}" alt="" class="img-fluid w-25">
                                     </div>
@@ -63,13 +63,14 @@
                                         Masukkan username & password dengan benar
                                     </p>
 
-                                    @if ($errors->any())
+                                    @if ($errors->has('login'))
                                         <div class="alert alert-danger alert-dismissible show fade">
-                                            Username dan password salah.
+                                            {{ $errors->first('login') }}
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
                                     @endif
+
 
                                     <form class="form" action="/login" method="POST">
                                         @csrf
@@ -84,7 +85,8 @@
 
                                             <div class="form-group">
                                                 <label for="password" class="sr-only">Password</label>
-                                                <span class="float-end"><a href="https://wa.link/wgu8y5">Forgot password ?</a></span>
+                                                <span class="float-end"><a href="https://wa.link/wgu8y5">Forgot password
+                                                        ?</a></span>
                                                 <input type="password" id="password" class="form-control"
                                                     placeholder="Masukkan password" name="password"
                                                     value="{{ old('password') }}" required>
@@ -94,7 +96,8 @@
 
                                         <div class="form-check my-3">
                                             <div class="checkbox">
-                                                <input type="checkbox" class="form-check-input" id="checkbox" name="remember">
+                                                <input type="checkbox" class="form-check-input" id="checkbox"
+                                                    name="remember">
                                                 <label for="checkbox">Simpan login</label>
                                             </div>
                                         </div>
@@ -127,7 +130,7 @@
     <script>
         AOS.init();
     </script>
-    
+
 </body>
 
 </html>

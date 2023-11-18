@@ -14,20 +14,15 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
-        $currentDate = Carbon::now();
-        $expiredDate = $currentDate->addMonth();
-
-        $currentDate2 = Carbon::now();
-
         DB::table('members')->insert(
             [
                 'name' => 'member pio',
                 'game' => 'Point Blank Zepetto',
                 'member_id' => 'PBZPT123',
                 'serial' => '787231hfgh2389675t',
-                'expired_date' => $expiredDate,
+                'expired_date' => Carbon::now()->addDay(),
                 'created_by' => 'ceo',
-                'created_at' => $currentDate2,
+                'created_at' => Carbon::now(),
             ]
         );
     }

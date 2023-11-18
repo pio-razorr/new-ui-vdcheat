@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AktivasiUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataMemberController;
 use App\Http\Controllers\LoginController;
@@ -60,6 +61,9 @@ Route::middleware(['auth:web,member'])->group(function () {
 
     // Menampilkan halaman transfer saldo
     Route::resource('/transfer-saldo', TransferSaldoController::class);
+
+    // Menampilkan halaman transfer saldo
+    Route::resource('/aktivasi-user', AktivasiUserController::class);
 
     // Menampilkan halaman kompensasi
     Route::get('/kompensasi', [DashboardController::class, 'kompensasi']);
