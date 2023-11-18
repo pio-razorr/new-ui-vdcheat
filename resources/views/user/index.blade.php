@@ -43,101 +43,180 @@
 
                         {{-- INFORMASI SALDO, TRANSAKSI, POINT, PENDAPATAN --}}
                         <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
-                                <div class="card">
-                                    <div class="card-body px-4 py-4-5">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
-                                                <div class="d-flex">
-                                                    <div class="stats-icon purple me-3">
-                                                        <i class="iconly-boldShow"></i>
+                            @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin')
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon purple me-3">
+                                                            <i class="iconly-boldShow"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <h6 class="text-muted font-semibold">Sisa saldo</h6>
-                                                    @if ($authUser->saldo >= 10000000)
-                                                        <h6 class="font-extrabold mb-0">Unlimited</h6>
-                                                    @else
-                                                        <h6 class="font-extrabold mb-0">
-                                                            {{ number_format($authUser->saldo, 0, ',', '.') }}</h6>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
-                                <div class="card">
-                                    <div class="card-body px-4 py-4-5">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="stats-icon blue me-3">
-                                                        <i class="iconly-boldProfile"></i>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h6 class="text-muted font-semibold">Transaksi</h6>
-                                                    <h6 class="font-extrabold mb-0">
-                                                        {{ number_format($authUser->transaksi, 0, ',', '.') }} Kali</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
-                                <div class="card">
-                                    <div class="card-body px-4 py-4-5">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
-                                                <div class="d-flex">
-                                                    <div class="stats-icon green me-3">
-                                                        <i class="iconly-boldAdd-User"></i>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h6 class="text-muted font-semibold">Point</h6>
-                                                    <h6 class="font-extrabold mb-0">
-                                                        @if (Auth::user()->role == 'ceo')
-                                                            Lu CEO !!!
-                                                        @elseif (Auth::user()->role == 'admin')
-                                                            Lu Admin !!!
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Sisa saldo</h6>
+                                                        @if ($authUser->saldo >= 10000000)
+                                                            <h6 class="font-extrabold mb-0">Unlimited</h6>
                                                         @else
-                                                            {{ number_format($authUser->point, 0, ',', '.') }}
+                                                            <h6 class="font-extrabold mb-0">
+                                                                {{ number_format($authUser->saldo, 0, ',', '.') }}</h6>
                                                         @endif
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
-                                <div class="card">
-                                    <div class="card-body px-4 py-4-5">
-                                        <div class="row">
-                                            <div
-                                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
-                                                <div class="d-flex">
-                                                    <div class="stats-icon red me-3">
-                                                        <i class="iconly-boldBookmark"></i>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <h6 class="text-muted font-semibold">Pendapatan</h6>
-                                                    <h6 class="font-extrabold mb-0">
-                                                        {{ number_format($authUser->pendapatan, 0, ',', '.') }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon purple me-3">
+                                                            <i class="iconly-boldShow"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Sisa saldo</h6>
+                                                        @if ($authUser->saldo >= 10000000)
+                                                            <h6 class="font-extrabold mb-0">Unlimited</h6>
+                                                        @else
+                                                            <h6 class="font-extrabold mb-0">
+                                                                {{ number_format($authUser->saldo, 0, ',', '.') }}</h6>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
+                            @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin')
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="stats-icon blue me-3">
+                                                            <i class="iconly-boldProfile"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Transaksi</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->transaksi, 0, ',', '.') }} Kali
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="stats-icon blue me-3">
+                                                            <i class="iconly-boldProfile"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Transaksi</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->transaksi, 0, ',', '.') }} Kali
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if (Auth::user()->role == 'resseler')
+                                <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon green me-3">
+                                                            <i class="iconly-boldAdd-User"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Point</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->point, 0, ',', '.') }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin')
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon red me-3">
+                                                            <i class="iconly-boldBookmark"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Pendapatan</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->pendapatan, 0, ',', '.') }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon red me-3">
+                                                            <i class="iconly-boldBookmark"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Pendapatan</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->pendapatan, 0, ',', '.') }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
                         {{-- INFORMASI SALDO, TRANSAKSI, POINT, PENDAPATAN --}}
 

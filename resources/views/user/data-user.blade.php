@@ -246,7 +246,7 @@
                                                                     <div
                                                                         class="alert alert-light-success color-success">
                                                                         <i class="bi bi-check-circle me-2"></i>Devil
-                                                                        Cheat - Pendaftaran akun.
+                                                                        Cheat - Pendaftaran Akun.
                                                                     </div>
                                                                     <div class="list-group">
 

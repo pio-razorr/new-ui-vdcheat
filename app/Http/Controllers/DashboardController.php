@@ -39,12 +39,58 @@ class DashboardController extends Controller
         return view('user.kompensasi', compact('authUser'));
     }
 
+
+
+
+    // VIEW TUKAR POINT
     function tukar_point()
     {
         $authUser = Auth::user();
 
         return view('user.tukar-point', compact('authUser'));
     }
+    // END VIEW TUKAR POINT
+
+    // PROSES TUKAR POINT
+    public function proses_tukar_point(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nominal_tukar' => 'required | numeric | min:1',
+        ]);
+
+        $authUser = Auth::user();
+
+        // Simpan saldo sebelumnya ke dalam session
+        session(['saldo-sebelum'=> $authUser->saldo]);
+
+        // Simpan saldo sebelumnya ke dalam session
+        session(['nominal-tukar'=> $request->input('nominal_tukar')]);
+
+        // Hitung sisa saldo dan update nilai total point
+        $nominalTukar = $request->input('nominal_tukar');
+        $sisaSaldo = $authUser->saldo + $authUser->point;
+
+
+        // Periksa apakah pengguna memiliki point sebelum mencoba menukar point
+        if ($authUser->point > 0) {
+            if ($nominalTukar <= $authUser->point && $nominalTukar > 0) {
+                $authUser->saldo += $nominalTukar;
+                $authUser->point -= $nominalTukar;
+                $authUser->save();
+
+                return redirect('/tukar-point')->with('success', 'Penukaran point berhasil.')->with('success-tukar-point', 'Berhasil tukar point')->with('data', $authUser);
+            } else {
+                return redirect('/tukar-point')->with('errors', 'Jumlah point yang ingin ditukar tidak valid.');
+            }
+        } else {
+            return redirect('/tukar-point')->with('errors', 'Anda tidak memiliki point untuk ditukar.');
+        }
+    }
+    // END PROSES TUKAR POINT
+
+
+
 
     function redeem_voucher()
     {

@@ -79,6 +79,7 @@ Route::middleware(['auth:web,member'])->group(function () {
 
     // Menampilkan halaman tukar point
     Route::get('/tukar-point', [DashboardController::class, 'tukar_point']);
+    Route::post('/tukar-point', [DashboardController::class, 'proses_tukar_point']);
 
     // Menampilkan halaman redeem voucher
     Route::get('/redeem-voucher', [DashboardController::class, 'redeem_voucher']);
