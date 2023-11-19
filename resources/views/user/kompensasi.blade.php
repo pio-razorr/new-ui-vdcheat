@@ -57,18 +57,15 @@
                                                 <label for="game">Game</label>
                                                 <select class="form-select" id="game">
                                                     <option selected>Pilih</option>
-                                                    <option disabled></option>
-
                                                     <option>Mobile Legends</option>
                                                     <option>Point Blank Zepetto</option>
                                                     <option>Point Blank Private Server</option>
-
                                                 </select>
                                             </fieldset>
 
                                             <div class="form-group">
                                                 <label for="kompensasi">Durasi kompensasi</label>
-                                                <input type="text" class="form-control" id="kompensasi"
+                                                <input type="number" class="form-control" id="kompensasi"
                                                     placeholder="Masukkan durasi kompensasi">
                                             </div>
 

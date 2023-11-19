@@ -114,6 +114,7 @@
                                                         </div>
                                                     </div>
                                                 </li>
+
                                                 <li class="list-group-item">
                                                     <div class="row">
                                                         <div class="col-6">
@@ -122,6 +123,22 @@
                                                         </div>
                                                         <div class="col-6 text-end">
                                                             {{ session('user.name') }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <i class="bi bi-person-circle me-1"></i>
+                                                            Level akun
+                                                        </div>
+                                                        <div class="col-6 text-end">
+                                                            @if (session('user.role') == 'resseler')
+                                                                Resseler
+                                                            @else
+                                                                Admin
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>

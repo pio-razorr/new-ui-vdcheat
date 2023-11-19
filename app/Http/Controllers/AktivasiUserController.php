@@ -31,7 +31,7 @@ class AktivasiUserController extends Controller
                 $dataUser = [
                     "aktivasi" => true,
                     "input_username" => $request->username,
-                    "pesan" => "$user->name | $user->role"
+                    "pesan" => $user->name . ' | ' . ($user->role == 'resseler' ? 'Resseler' : 'Admin')
                 ];
                 Alert::success('Username ditemukan.');
 
@@ -93,7 +93,6 @@ class AktivasiUserController extends Controller
 
         // Aktifkan pengguna dengan menetapkan nilai expired_date dan saldo
         $user->expired_date = now()->addMonth();
-        $user->saldo = 999999999999;
 
         // Mengambil waktu sekarang untuk dimasukkan ke kolom created_at
         $currentDateTime = Carbon::now();
@@ -101,7 +100,7 @@ class AktivasiUserController extends Controller
 
         $user->save();
 
-        return redirect('/aktivasi-user')->with('success', 'Pengguna berhasil diaktifkan')->with('success-aktivasi-user', 'Pengguna berhasil diaktifkan')->with('user', $user);
+        return redirect('/aktivasi-user')->with('success', 'Akun berhasil diaktivasi')->with('success-aktivasi-user', 'Akun berhasil diaktivasi')->with('user', $user);
     }
 
 

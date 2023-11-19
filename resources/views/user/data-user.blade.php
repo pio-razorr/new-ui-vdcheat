@@ -298,7 +298,11 @@
                                                                                         Level
                                                                                     </div>
                                                                                     <div class="col-9 text-end">
-                                                                                        {{ session('data.role') }}
+                                                                                        @if (session('data.role') == 'admin')
+                                                                                            Admin
+                                                                                        @else
+                                                                                            Resseler
+                                                                                        @endif
                                                                                     </div>
                                                                                 </div>
                                                                             </li>

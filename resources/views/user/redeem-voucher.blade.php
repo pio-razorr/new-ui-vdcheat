@@ -47,19 +47,14 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Informasi</h4>
                                     <p class="card-text">
-                                        Penukaran point memiliki rate 1:1. Point yang ditukar sama dengan saldo yang
-                                        akan di dapatkan.
+                                        Redeem voucher disini untuk mengklaim kode voucher yang telah diberikan oleh CEO.
                                     </p>
                                     <form class="form" method="post">
                                         <div class="form-body">
                                             <div class="form-group">
-                                                <label for="saldo">Saldo</label>
-                                                <input type="text" class="form-control" id="saldo" placeholder="{{ $authUser->saldo }}" disabled="">
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="kode-voucher" class="sr-only">Kode voucher</label>
                                                 <input type="text" id="kode-voucher" class="form-control"
-                                                    placeholder="Nominal tukar" name="LastName">
+                                                    placeholder="Masukkan kode voucher" name="LastName">
                                             </div>
                                         </div>
                                         <div class="form-actions mt-4">
