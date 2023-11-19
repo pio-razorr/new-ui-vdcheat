@@ -43,12 +43,15 @@ class TransferSaldoController extends Controller
         // Validasi Input
         $request->validate([
             'username' => 'required',
-            // Memastikan 'username' tidak boleh kosong
-            'saldo' => 'required | numeric | min:50000',
-            // Memastikan 'saldo' tidak boleh kosong dan harus berupa angka
+            'saldo' => 'required|numeric|min:50000',
         ], [
             'saldo.min' => 'Nominal transfer saldo minimal Rp. 50.000',
         ]);
+
+        // Validasi tambahan: Jika role adalah admin, CEO, atau reseller dengan saldo di atas 10 juta, kembalikan dengan pesan kesalahan
+        if ($userTujuan->role == 'admin' || $userTujuan->role == 'ceo' || ($userTujuan->role == 'resseler' && $userTujuan->saldo > 10000000)) {
+            return redirect('/transfer-saldo')->with('warning', 'Transfer saldo tidak diizinkan untuk akun dengan level Resseler VIP, Admin, CEO')->withInput();
+        }
 
         // Tambahkan saldo ke pengguna tujuan
         $nominalTransfer = $request->input('saldo');
@@ -61,6 +64,7 @@ class TransferSaldoController extends Controller
         // Redirect atau berikan respons dengan pesan sukses
         return redirect('/transfer-saldo')->with('success', 'Saldo berhasil ditransfer.')->with('success-transfer-saldo', 'Saldo berhasil ditransfer')->with('data', $userTujuan);
     }
+
 
 
 

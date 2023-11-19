@@ -25,7 +25,17 @@
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
                                 <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
+                                <p class="mb-0 text-sm text-gray-600">
+                                    @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                        Resseler
+                                    @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                        Resseler VIP
+                                    @elseif ($authUser->role == 'admin')
+                                        Admin
+                                    @elseif ($authUser->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
@@ -69,6 +79,32 @@
                                         </div>
                                     </div>
                                 </div>
+                            @elseif (Auth::user()->role == 'resseler' && $authUser->saldo >= 10000000)
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon purple me-3">
+                                                            <i class="iconly-boldShow"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Sisa saldo</h6>
+                                                        @if ($authUser->saldo >= 10000000)
+                                                            <h6 class="font-extrabold mb-0">Unlimited</h6>
+                                                        @else
+                                                            <h6 class="font-extrabold mb-0">
+                                                                {{ number_format($authUser->saldo, 0, ',', '.') }}</h6>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @else
                                 <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
                                     <div class="card">
@@ -120,6 +156,29 @@
                                         </div>
                                     </div>
                                 </div>
+                            @elseif (Auth::user()->role == 'resseler' && $authUser->saldo >= 10000000)
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="stats-icon blue me-3">
+                                                            <i class="iconly-boldProfile"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Transaksi</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->transaksi, 0, ',', '.') }} Kali
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @else
                                 <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
                                     <div class="card">
@@ -145,7 +204,7 @@
                                 </div>
                             @endif
 
-                            @if (Auth::user()->role == 'resseler')
+                            @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
                                 <div class="col-lg-3 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
                                     <div class="card">
                                         <div class="card-body px-4 py-4-5">
@@ -185,7 +244,31 @@
                                                     <div>
                                                         <h6 class="text-muted font-semibold">Pendapatan</h6>
                                                         <h6 class="font-extrabold mb-0">
-                                                            {{ number_format($authUser->pendapatan, 0, ',', '.') }}</h6>
+                                                            {{ number_format($authUser->pendapatan, 0, ',', '.') }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif (Auth::user()->role == 'resseler' && Auth::user()->saldo >= 10000000)
+                                <div class="col-lg-4 col-md-6 col-sm-6" data-aos="zoom-in" data-aos-duration="1000">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-12 d-flex justify-content-start ">
+                                                    <div class="d-flex">
+                                                        <div class="stats-icon red me-3">
+                                                            <i class="iconly-boldBookmark"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-muted font-semibold">Pendapatan</h6>
+                                                        <h6 class="font-extrabold mb-0">
+                                                            {{ number_format($authUser->pendapatan, 0, ',', '.') }}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -356,7 +439,15 @@
                                                             Level akun
                                                         </div>
                                                         <div class="col-6 text-end">
-                                                            {{ $authUser->role }}
+                                                            @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                                                Resseler
+                                                            @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                                                Resseler VIP
+                                                            @elseif ($authUser->role == 'admin')
+                                                                Admin
+                                                            @elseif ($authUser->role == 'ceo')
+                                                                CEO
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>
@@ -418,7 +509,13 @@
                                                                 Masa berlaku
                                                             </div>
                                                             <div class="col-6 text-end">
-                                                                -
+                                                                @if (Auth::user()->role == 'admin')
+                                                                    {{ $authUser->expired_date }}
+                                                                @elseif (Auth::user()->role == 'resseler' && strtotime($authUser->expired_date) > strtotime('+1 year'))
+                                                                    -
+                                                                @else
+                                                                    {{ $authUser->expired_date }}
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </li>

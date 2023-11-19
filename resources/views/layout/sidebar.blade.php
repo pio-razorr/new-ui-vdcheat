@@ -149,7 +149,7 @@
                 @endif
 
                 {{-- MENU TUKAR POINT --}}
-                @if (Auth::user()->role == 'resseler')
+                @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
                     <li class="sidebar-item @if (Request::is('tukar-point')) active @endif">
                         <a href="/tukar-point" class='sidebar-link'>
                             <i class="bi bi-coin"></i>
@@ -159,7 +159,7 @@
                 @endif
 
                 {{-- MENU REDEEM VOUCHER --}}
-                @if (Auth::user()->role == 'resseler')
+                @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
                     <li class="sidebar-item @if (Request::is('redeem-voucher')) active @endif">
                         <a href="/redeem-voucher" class='sidebar-link'>
                             <i class="bi bi-gift"></i>

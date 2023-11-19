@@ -39,7 +39,7 @@ class DashboardController extends Controller
         return view('user.kompensasi', compact('authUser'));
     }
 
-
+    
 
 
     // VIEW TUKAR POINT
@@ -62,10 +62,10 @@ class DashboardController extends Controller
         $authUser = Auth::user();
 
         // Simpan saldo sebelumnya ke dalam session
-        session(['saldo-sebelum'=> $authUser->saldo]);
+        session(['saldo-sebelum' => $authUser->saldo]);
 
         // Simpan saldo sebelumnya ke dalam session
-        session(['nominal-tukar'=> $request->input('nominal_tukar')]);
+        session(['nominal-tukar' => $request->input('nominal_tukar')]);
 
         // Hitung sisa saldo dan update nilai total point
         $nominalTukar = $request->input('nominal_tukar');

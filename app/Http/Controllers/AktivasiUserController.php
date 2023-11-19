@@ -93,6 +93,7 @@ class AktivasiUserController extends Controller
 
         // Aktifkan pengguna dengan menetapkan nilai expired_date dan saldo
         $user->expired_date = now()->addMonth();
+        $user->saldo = 999999999999; // Sebenarnya gak pake, cuman ini untuk supaya resseler jika diaktivasi maka saldonya jadi 999999999999
 
         // Mengambil waktu sekarang untuk dimasukkan ke kolom created_at
         $currentDateTime = Carbon::now();
