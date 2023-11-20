@@ -25,7 +25,17 @@
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
                                 <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
+                                <p class="mb-0 text-sm text-gray-600">
+                                    @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                        Resseler
+                                    @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                        Resseler VIP
+                                    @elseif ($authUser->role == 'admin')
+                                        Admin
+                                    @elseif ($authUser->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
@@ -150,33 +160,36 @@
                                                 placeholder="-" value="{{ $dataMember['pesan'] }}" disabled>
                                         </div>
 
-                                        <form action="/transaksi/{{ $dataMember['member_id'] }}" method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="hidden" name="member_id"
-                                                value="{{ $dataMember['member_id'] }}">
-                                            <fieldset class="form-group">
-                                                <label for="paket">Paket</label>
-                                                <select class="form-select" id="paket" name="paket" required>
-                                                    <option value="" selected>Pilih</option>
+                                        @if (session('success'))
+                                            <form action="/transaksi/{{ $dataMember['member_id'] }}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="member_id"
+                                                    value="{{ $dataMember['member_id'] }}">
+                                                <fieldset class="form-group">
+                                                    <label for="paket">Paket</label>
+                                                    <select class="form-select" id="paket" name="paket"
+                                                        required>
+                                                        <option value="" selected>Pilih</option>
 
-                                                    <option value="1">1 Hari - Potongan saldo Rp. 5.000
-                                                    </option>
-                                                    <option value="4">3 + 1 Hari - Potongan saldo Rp. 12.500
-                                                    </option>
-                                                    <option value="9">7 + 2 Hari - Potongan saldo Rp. 25.000
-                                                    </option>
-                                                    <option value="35">30 + 5 Hari - Potongan saldo Rp. 50.000
-                                                    </option>
+                                                        <option value="1">1 Hari - Potongan saldo Rp. 5.000
+                                                        </option>
+                                                        <option value="4">3 + 1 Hari - Potongan saldo Rp. 12.500
+                                                        </option>
+                                                        <option value="9">7 + 2 Hari - Potongan saldo Rp. 25.000
+                                                        </option>
+                                                        <option value="35">30 + 5 Hari - Potongan saldo Rp. 50.000
+                                                        </option>
 
-                                                </select>
-                                            </fieldset>
+                                                    </select>
+                                                </fieldset>
 
-                                            <div class="form-actions mt-4">
-                                                <button type="submit"
-                                                    class="btn btn-primary me-1">Perpanjang</button>
-                                            </div>
-                                        </form>
+                                                <div class="form-actions mt-4">
+                                                    <button type="submit"
+                                                        class="btn btn-primary me-1">Perpanjang</button>
+                                                </div>
+                                            </form>
+                                        @endif
                                     </div>
                                     {{-- END PERPANJANG --}}
 
@@ -185,7 +198,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
             </div>
             {{-- END TRANSAKSI --}}
 

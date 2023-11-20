@@ -25,7 +25,17 @@
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
                                 <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
+                                <p class="mb-0 text-sm text-gray-600">
+                                    @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                        Resseler
+                                    @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                        Resseler VIP
+                                    @elseif ($authUser->role == 'admin')
+                                        Admin
+                                    @elseif ($authUser->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
@@ -133,17 +143,22 @@
                                                                         @endif
                                                                     </td>
                                                                     <td>
+                                                                        @if (Auth::user()->role == 'ceo')
+                                                                            <a href="{{ '/ubah-user/' . $user->id . '/edit' }}"
+                                                                                class="btn icon btn-sm btn-primary me-2">
+                                                                                <i class="bi bi-pencil"></i>
+                                                                            </a>
+                                                                        @endif
                                                                         <form action="{{ '/data-user/' . $user->id }}"
                                                                             method="POST" class="delete-form">
                                                                             @csrf
                                                                             @method('DELETE')
                                                                             <button type="submit"
-                                                                                class="btn btn-sm btn-outline-danger"
+                                                                                class="btn icon btn-sm btn-danger"
                                                                                 data-confirm-delete="true">
                                                                                 <i class="bi bi-trash"></i>
                                                                             </button>
                                                                         </form>
-
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -153,8 +168,8 @@
                                             @else
                                                 <h1>Data kosong</h1>
                                             @endif
-
                                         </div>
+
                                         <div class="tab-pane fade" id="profile" role="tabpanel"
                                             aria-labelledby="profile-tab">
                                             <div class="row">
@@ -449,8 +464,6 @@
     @include('layout.script')
 
     @include('sweetalert::alert')
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
         $(document).ready(function() {

@@ -25,7 +25,7 @@ class AktivasiUserController extends Controller
         ];
 
         if ($request->username) {
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('username', $request->username)->whereIn('role', ['admin', 'resseler'])->first();
 
             if ($user) {
                 $dataUser = [
@@ -34,6 +34,7 @@ class AktivasiUserController extends Controller
                     "pesan" => $user->name . ' | ' . ($user->role == 'resseler' ? 'Resseler' : 'Admin')
                 ];
                 Alert::success('Username ditemukan.');
+                session()->flash('success', 'Username ditemukan.');
 
             } else {
                 $dataUser = [

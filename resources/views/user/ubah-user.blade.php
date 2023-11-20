@@ -19,7 +19,7 @@
             <div class="page-heading">
                 <div class="row" data-aos="zoom-in">
                     <div class="col-6">
-                        <h3>Ubah serial member</h3>
+                        <h3>Ubah data user</h3>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
                         <div class="user-menu d-flex">
@@ -57,31 +57,48 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Informasi</h4>
                                         <p class="card-text">
-                                            Cek terlebih dahulu apakah data member yang akan dirubah sudah betul atau
+                                            Cek terlebih dahulu apakah data user yang akan dirubah sudah betul atau
                                             belum.
                                         </p>
 
-                                        <form class="form" action="{{ '/ubah-serial/' . $data->id }}" method="post">
+                                        <form class="form" action="{{ '/ubah-user/' . $data->id }}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-body">
                                                 <div class="form-group">
                                                     <label for="name" class="sr-only">Name</label>
                                                     <input type="text" id="name" class="form-control"
-                                                        placeholder="" name="name" value="{{ $data->name }}"
+                                                        placeholder="" name="name" value="{{ $data->name }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="role" class="sr-only">Level akun</label>
+                                                    <input type="text" id="role" class="form-control"
+                                                        placeholder="" name="role" value="{{ $roleLabel }}"
                                                         disabled>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="game" class="sr-only">Game</label>
-                                                    <input type="text" id="game" class="form-control"
-                                                        placeholder="" name="game" value="{{ $data->game }}"
-                                                        disabled>
+                                                    <label for="username" class="sr-only">Username</label>
+                                                    <input type="text" id="username" class="form-control"
+                                                        placeholder="Masukkan username" name="username"
+                                                        value="{{ $data->username }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="serial" class="sr-only">Serial</label>
-                                                    <input type="text" id="serial" class="form-control"
-                                                        placeholder="Masukkan serial" name="serial"
-                                                        value="{{ $data->serial }}">
+                                                    <label for="password" class="sr-only">Password</label>
+                                                    <input type="text" id="password" class="form-control"
+                                                        placeholder="Masukkan password" name="password"
+                                                        value="{{ $data->password }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="no_hp" class="sr-only">No. Handphone</label>
+                                                    <input type="text" id="no_hp" class="form-control"
+                                                        placeholder="Masukkan no hp" name="no_hp"
+                                                        value="{{ $data->no_hp }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saldo" class="sr-only">Saldo</label>
+                                                    <input type="text" id="saldo" class="form-control"
+                                                        placeholder="Masukkan jumlah saldo" name="saldo"
+                                                        value="{{ $data->saldo }}">
                                                 </div>
                                             </div>
                                             <div class="form-actions">

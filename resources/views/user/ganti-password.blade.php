@@ -4,7 +4,7 @@
 @include('layout.head')
 
 <body>
-    <script src="{{asset('assets/static/js/initTheme.js')}}"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         @include('layout.sidebar')
@@ -25,7 +25,17 @@
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
                                 <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
+                                <p class="mb-0 text-sm text-gray-600">
+                                    @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                        Resseler
+                                    @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                        Resseler VIP
+                                    @elseif ($authUser->role == 'admin')
+                                        Admin
+                                    @elseif ($authUser->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
@@ -57,17 +67,22 @@
                                             <div class="form-group">
                                                 <label for="password-lama" class="sr-only">Password lama</label>
                                                 <input type="text" id="password-lama" class="form-control"
-                                                    placeholder="Masukkan password lama" value="{{ old('password_lama') }}" name="password_lama" required>
+                                                    placeholder="Masukkan password lama"
+                                                    value="{{ old('password_lama') }}" name="password_lama" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="password-baru" class="sr-only">Password baru</label>
                                                 <input type="text" id="password-baru" class="form-control"
-                                                    placeholder="Masukkan password baru" value="{{ old('password_baru') }}" name="password_baru" required>
+                                                    placeholder="Masukkan password baru"
+                                                    value="{{ old('password_baru') }}" name="password_baru" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="ulangi-password-baru" class="sr-only">Ulangi password baru</label>
+                                                <label for="ulangi-password-baru" class="sr-only">Ulangi password
+                                                    baru</label>
                                                 <input type="text" id="ulangi-password-baru" class="form-control"
-                                                    placeholder="Masukkan password lama" value="{{ old('ulangi_password_baru') }}" name="ulangi_password_baru" required>
+                                                    placeholder="Masukkan password lama"
+                                                    value="{{ old('ulangi_password_baru') }}"
+                                                    name="ulangi_password_baru" required>
                                             </div>
                                         </div>
                                         <div class="form-actions mt-4">

@@ -35,6 +35,7 @@ class TransaksiController extends Controller
                     "pesan" => "$member->name | $member->game"
                 ];
                 Alert::success('Member id ditemukan.');
+                session()->flash('success', 'Member id ditemukan');
 
             } else {
                 $dataMember = [

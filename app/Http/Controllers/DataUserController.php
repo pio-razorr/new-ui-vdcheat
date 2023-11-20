@@ -121,16 +121,52 @@ class DataUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::where('id', $id)->first();
+
+        $roleLabel = '';
+
+        if ($data->role == 'resseler' && $data->saldo <= 10000000) {
+            $roleLabel = 'Resseler';
+        } elseif ($data->role == 'resseler' && $data->saldo >= 10000000) {
+            $roleLabel = 'Resseler VIP';
+        } elseif ($data->role == 'admin') {
+            $roleLabel = 'Admin';
+        } elseif ($data->role == 'ceo') {
+            $roleLabel = 'CEO';
+        }
+
+        $authUser = Auth::user();
+
+        return view('user.ubah-user', compact('authUser', 'roleLabel'))->with('data', $data);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validasi Input
+        $request->validate([
+            'name' => 'required',
+            // Sesuaikan validasi dengan field lainnya
+        ]);
+
+        // Ambil data dari request
+        $data = [
+            'name' => $request->input('name'),
+            'username' => $request->input('username'),
+            'password' => $request->input('password') ? bcrypt($request->input('password')) : null,
+            'no_hp' => $request->input('no_hp'),
+            'saldo' => $request->input('saldo'),
+        ];
+
+        // Update data ke database
+        User::where('id', $id)->update($data);
+
+        return redirect('/ubah-user')->with('success', 'Data user berhasil diubah.');
     }
+
 
     /**
      * Remove the specified resource from storage.

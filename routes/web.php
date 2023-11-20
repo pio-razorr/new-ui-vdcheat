@@ -77,6 +77,9 @@ Route::middleware(['auth:web,member'])->group(function () {
     // Menampilkan halaman data user
     Route::resource('/data-user', DataUserController::class);
 
+    // Menampilkan halaman ubah user
+    Route::resource('/ubah-user', DataUserController::class);
+
     // Menampilkan halaman tukar point
     Route::get('/tukar-point', [DashboardController::class, 'tukar_point']);
     Route::post('/tukar-point', [DashboardController::class, 'proses_tukar_point']);

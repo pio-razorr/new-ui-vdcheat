@@ -501,7 +501,7 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                                @if (Auth::user()->role != 'ceo')
+                                                @if ($authUser->role == 'admin' || ($authUser->role == 'resseler' && $authUser->saldo > 10000000))
                                                     <li class="list-group-item mb-2">
                                                         <div class="row">
                                                             <div class="col-6">
@@ -509,17 +509,12 @@
                                                                 Masa berlaku
                                                             </div>
                                                             <div class="col-6 text-end">
-                                                                @if (Auth::user()->role == 'admin')
-                                                                    {{ $authUser->expired_date }}
-                                                                @elseif (Auth::user()->role == 'resseler' && strtotime($authUser->expired_date) > strtotime('+1 year'))
-                                                                    -
-                                                                @else
-                                                                    {{ $authUser->expired_date }}
-                                                                @endif
+                                                                {{ $authUser->expired_date }}
                                                             </div>
                                                         </div>
                                                     </li>
                                                 @endif
+
 
                                             </ul>
                                         </div>

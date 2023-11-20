@@ -25,7 +25,17 @@
                         <div class="user-menu d-flex">
                             <div class="user-name text-end me-3">
                                 <h6 class="mb-0 text-gray-600">{{ $authUser->name }}</h6>
-                                <p class="mb-0 text-sm text-gray-600">{{ $authUser->role }}</p>
+                                <p class="mb-0 text-sm text-gray-600">
+                                    @if ($authUser->role == 'resseler' && $authUser->saldo <= 10000000)
+                                        Resseler
+                                    @elseif ($authUser->role == 'resseler' && $authUser->saldo >= 10000000)
+                                        Resseler VIP
+                                    @elseif ($authUser->role == 'admin')
+                                        Admin
+                                    @elseif ($authUser->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </p>
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
@@ -47,8 +57,8 @@
                                 <div class="card-body">
                                     <h4 class="card-title mb-4">Informasi</h4>
                                     <p class="card-text">
-                                        Segala bentuk kesalahan penginputan data merupakan resiko seller, mohon teliti
-                                        sebelum melakukan submit.
+                                        Aktivasi user hanya bisa dilakukan 1x, jika ingin aktivasi kembali harap tunggu
+                                        sampai batas waktu akunnya berakhir baru aktivasi kembali.
                                     </p>
 
                                     <hr>
@@ -71,15 +81,18 @@
                                             value="{{ $dataUser['pesan'] }}" disabled>
                                     </div>
 
-                                    <form action="/aktivasi-user/{{ $dataUser['input_username'] }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="username" value="{{ $dataUser['input_username'] }}">
+                                    @if (session('success'))
+                                        <form action="/aktivasi-user/{{ $dataUser['input_username'] }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="username"
+                                                value="{{ $dataUser['input_username'] }}">
 
-                                        <div class="form-actions mt-4">
-                                            <button type="submit" class="btn btn-primary me-1">Aktivasi</button>
-                                        </div>
-                                    </form>
+                                            <div class="form-actions mt-4">
+                                                <button type="submit" class="btn btn-primary me-1">Aktivasi</button>
+                                            </div>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
