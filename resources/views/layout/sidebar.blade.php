@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     {{-- <a href="#"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a> --}}
-                    <h5 class="m-0">Alvin Cheat</h5>
+                    <h5 class="m-0">VVIP MODS</h5>
                 </div>
                 {{-- Toggle dark mode --}}
                 <div class="theme-toggle d-flex gap-2 align-items-center">
@@ -84,16 +84,16 @@
 
                     <ul class="submenu ">
                         <li class="submenu-item">
-                            <a href="https://vdcheat.com/download/63" class="submenu-link">APK Mobile Legend MOD</a>
+                            <a href="#" class="submenu-link">APK Mobile Legend MOD</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="https://vdcheat.com/download/64" class="submenu-link">Mobile Legend Inject</a>
+                            <a href="#" class="submenu-link">Mobile Legend Inject</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="https://vdcheat.com/download/62" class="submenu-link">Point Blank Zepetto</a>
+                            <a href="#" class="submenu-link">Point Blank Zepetto</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="https://vdcheat.com/download/60" class="submenu-link">Point Blank Private</a>
+                            <a href="#" class="submenu-link">Point Blank Private</a>
                         </li>
                     </ul>
                 </li>

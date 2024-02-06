@@ -96,6 +96,6 @@ class LoginController extends Controller
         Auth::logout();
 
         // Mengarahkan pengguna kembali ke halaman login
-        return redirect('/login');
+        return redirect('/');
     }
 }

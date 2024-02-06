@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    return view('landing-page.index');
 });
 
 // Supaya saat user sudah login, maka tidak bisa kembali ke halaman login
