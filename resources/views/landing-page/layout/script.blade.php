@@ -15,6 +15,7 @@
 </script>
 
 <!-- Vendor JS Files -->
+<script src="{{ asset('assets-landing/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 <script src="{{ asset('assets-landing/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets-landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets-landing/vendor/glightbox/js/glightbox.min.js') }}"></script>
@@ -59,4 +60,23 @@
 
     // Panggil fungsi showPromoAlert saat dokumen selesai dimuat
     document.addEventListener("DOMContentLoaded", showPromoAlert);
+</script>
+
+<script>
+    // Ambil bagian halaman setelah domain
+    var path = window.location.pathname;
+    
+    // Ubah menjadi huruf kapital
+    var pageTitle = path.charAt(1).toUpperCase() + path.slice(2);
+
+    // Hapus garis miring (/) jika ada
+    pageTitle = pageTitle.replace('/', '');
+
+    // Jika pageTitle kosong, artinya halaman utama
+    if (pageTitle === '') {
+        pageTitle = 'HOME';
+    }
+
+    // Ubah teks testimoni sesuai dengan judul halaman
+    document.getElementById('testimoni-title').innerHTML = '<span>' + pageTitle + '</span>';
 </script>

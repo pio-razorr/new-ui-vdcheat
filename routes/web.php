@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransferSaldoController;
 use App\Http\Controllers\DataUserController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('landing-page.index');
-});
+// Tampilkan halaman landing home
+Route::get('/', [LandingController::class, 'index']);
+
+// Tampilkan halaman landing about
+Route::get('/about', [LandingController::class, 'about']);
+
+// Tampilkan halaman landing harga
+Route::get('/harga', [LandingController::class, 'harga']);
+
+// Tampilkan halaman landing galeri
+Route::get('/galeri', [LandingController::class, 'galeri']);
+
+// Tampilkan halaman landing testimoni
+Route::get('/testimoni', [LandingController::class, 'testimoni']);
 
 // Supaya saat user sudah login, maka tidak bisa kembali ke halaman login
 Route::middleware(['guest'])->group(function () {
