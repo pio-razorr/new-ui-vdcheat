@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryTransaksi;
 use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -173,15 +174,19 @@ class TransaksiController extends Controller
         switch ($selectedPaket) {
             case '1':
                 $hargaPaket = 5000;
+                $paketDetails = '1';
                 break;
             case '4':
                 $hargaPaket = 12500;
+                $paketDetails = '3 + 2';
                 break;
             case '9':
                 $hargaPaket = 25000;
+                $paketDetails = '7 + 3';
                 break;
             case '35':
                 $hargaPaket = 50000;
+                $paketDetails = '30 + 6';
                 break;
             // dan seterusnya
         }
@@ -232,9 +237,22 @@ class TransaksiController extends Controller
             return redirect('/transaksi')->with('error', 'Saldo anda tidak cukup.');
         }
 
+        // Menyiapkan data yang akan dimasukkan ke dalam database
+        $data['nama'] = $authUser->name; // Ambil nama pengguna
+        $data['user_id'] = $authUser->id; // Ambil ID pengguna
+        $data['game'] = $request->input('game');
+        $data['transaction_type'] = 'order personal ' . $paketDetails . ' hari'; // Jenis transaksi
+        $data['additional_info'] = 'order personal ' . $memberId; // Informasi tambahan terkait transaksi
+        $data['created_at'] = $currentDateTime;
+        $data['expired_date'] = $expiredDate;
+
         // Menyimpan data ke dalam database menggunakan model Member
         $data['transaksi'] = $transaksi;
         Member::create($data);
+
+        // Menyimpan data ke dalam database menggunakan model HistoryTransaksi
+        $historyTransaksi = new HistoryTransaksi($data);
+        $historyTransaksi->save();
 
         // Mengalihkan pengguna kembali ke halaman transaksi dengan pesan sukses dan data yang baru dimasukkan
         return redirect('/transaksi')->with('success', 'Transaksi berhasil.')->with('success-transaksi', 'Transaksi berhasil.')->with('data', $data)->withInput();
@@ -368,15 +386,19 @@ class TransaksiController extends Controller
         switch ($selectedPaket) {
             case '1':
                 $hargaPaket = 5000;
+                $paketDetails = '1';
                 break;
             case '4':
                 $hargaPaket = 12500;
+                $paketDetails = '3 + 2';
                 break;
             case '9':
                 $hargaPaket = 25000;
+                $paketDetails = '7 + 3';
                 break;
             case '35':
                 $hargaPaket = 50000;
+                $paketDetails = '30 + 6';
                 break;
             // dan seterusnya
         }
@@ -437,6 +459,19 @@ class TransaksiController extends Controller
         // Ambil user login
         $authUser = Auth::user();
         Member::where('member_id', $id)->update($data);
+
+        // Membuat objek baru HistoryTransaksi
+        $historyTransaksi = new HistoryTransaksi();
+
+        // Mengisi informasi transaksi
+        $historyTransaksi->user_id = Auth::id(); // ID pengguna yang melakukan transaksi
+        $historyTransaksi->nama = $authUser->name; // Nama pengguna yang melakukan transaksi
+        $historyTransaksi->game = $game; // Nama game (jika tersedia)
+        $historyTransaksi->transaction_type = 'perpanjang ' . $paketDetails . ' hari'; // Jenis transaksi
+        $historyTransaksi->additional_info = 'Perpanjang ' . $id; // Informasi tambahan terkait transaksi
+
+        // Simpan objek history transaksi ke dalam database
+        $historyTransaksi->save();
 
         // Mengalihkan pengguna kembali ke halaman transaksi dengan pesan sukses dan data yang baru dimasukkan
         return redirect('/transaksi')->with('success', 'Berhasil perpanjang.')->with('success-perpanjang', 'Berhasil perpanjang.')->with('data', $data)->withInput();

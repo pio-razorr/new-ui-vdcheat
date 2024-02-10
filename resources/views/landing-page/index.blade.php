@@ -60,7 +60,7 @@
         <div class="container">
             <div class="row" data-aos="fade-up">
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 col-6">
                     <div class="count-box">
                         <i class="bi bi-person-circle"></i>
                         <span data-purecounter-start="0" data-purecounter-end="{{ $totalUser->count() }}"
@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                <div class="col-lg-3 col-md-6 col-6">
                     <div class="count-box">
                         <i class="bi bi-people-fill"></i>
                         <span data-purecounter-start="0" data-purecounter-end="{{ $totalMember->count() }}"
@@ -78,16 +78,16 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                <div class="col-lg-3 col-md-6 mt-5 mt-sm-0 col-6">
                     <div class="count-box">
                         <i class="bi bi-cart-check"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="331" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ $totalTransaksi->count() }}" data-purecounter-duration="1"
                             class="purecounter"></span>
                         <p>Total Transaksi</p>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                <div class="col-lg-3 col-md-6 mt-5 mt-sm-0 col-6">
                     <div class="count-box">
                         <i class="bi bi-discord"></i>
                         <span data-purecounter-start="0" data-purecounter-end="11" data-purecounter-duration="1"

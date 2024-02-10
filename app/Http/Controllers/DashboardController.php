@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryTransaksi;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,11 +27,21 @@ class DashboardController extends Controller
             ->where("expired_date", '>', $now)
             ->get();
 
-        // Mengirim data pengguna yang saat ini masuk ($authUser) dan daftar anggota yang sesuai ($members) ke tampilan 'user.index'.
-        // Data ini akan digunakan untuk menampilkan informasi pengguna dan daftar anggota yang memenuhi kondisi tertentu di tampilan.
-        return view('user.index', compact('authUser', 'members'));
+        // Mengambil semua data transaksi dari model HistoryTransaksi
+        if ($authUser->role === 'ceo') {
+            // Jika pengguna adalah CEO, maka ambil semua data history transaksi.
+            $historyTransaksis = HistoryTransaksi::all();
+        } else {
+            // Jika bukan CEO, maka ambil data history transaksi sesuai ID pengguna yang sedang di autentikasi.
+            $historyTransaksis = HistoryTransaksi::where('user_id', $authUser->id)->get();
+        }
 
+        // Mengirim data pengguna yang saat ini masuk ($authUser), daftar anggota yang sesuai ($members),
+        // dan data history transaksi yang sesuai ($historyTransaksis) ke tampilan 'user.index'.
+        // Data ini akan digunakan untuk menampilkan informasi pengguna, daftar anggota, dan history transaksi yang memenuhi kondisi tertentu di tampilan.
+        return view('user.index', compact('authUser', 'members', 'historyTransaksis'));
     }
+
 
     function kompensasi()
     {
@@ -39,7 +50,7 @@ class DashboardController extends Controller
         return view('user.kompensasi', compact('authUser'));
     }
 
-    
+
 
 
     // VIEW TUKAR POINT

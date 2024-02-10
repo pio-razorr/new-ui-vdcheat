@@ -63,7 +63,7 @@ class DataUserController extends Controller
             // Memastikan 'name' tidak boleh kosong
             'name' => 'required',
             // Memastikan 'username' tidak boleh kosong
-            'username' => 'required',
+            'username' => 'required|unique:users,username', // Validasi unik untuk kolom 'username'
             // Memastikan 'no_hp' tidak boleh kosong dan harus berupa angka
             'no_hp' => 'required | numeric',
             // Memastikan 'password' tidak boleh kosong

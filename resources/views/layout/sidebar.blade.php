@@ -139,14 +139,14 @@
                 @endif
 
                 {{-- MENU KOMPENSASI --}}
-                @if (Auth::user()->role == 'ceo')
+                {{-- @if (Auth::user()->role == 'ceo')
                     <li class="sidebar-item @if (Request::is('kompensasi')) active @endif">
                         <a href="/kompensasi" class='sidebar-link'>
                             <i class="bi bi-piggy-bank"></i>
                             <span>Kompensasi</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 {{-- MENU TUKAR POINT --}}
                 @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)

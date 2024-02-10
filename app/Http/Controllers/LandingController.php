@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryTransaksi;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,9 +13,10 @@ class LandingController extends Controller
     {
         $totalUser = User::all();
         $totalMember = Member::all();
+        $totalTransaksi = HistoryTransaksi::all();
 
         // Menampilkan tampilan landing home
-        return view("landing-page.index", compact('totalUser', 'totalMember'));
+        return view("landing-page.index", compact('totalUser', 'totalMember', 'totalTransaksi'));
     }
 
     function about()

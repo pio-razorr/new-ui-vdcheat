@@ -592,42 +592,28 @@
                                         <div class="card-body pt-0">
                                             <div class="list-group">
 
-                                                <p class="text-center">Tidak ada riwayat.</p>
-
-                                                <a href="#"
-                                                    class="list-group-item list-group-item-action active">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1 text-white">Point Blank Zepetto</h5>
-                                                        <small>3 days ago</small>
-                                                    </div>
-                                                    <p class="mb-1">
-                                                        Anda telah melakukan perpanjangan paket 3 hari dengan member id
-                                                        ML-51325324
-                                                    </p>
-                                                </a>
-
-                                                <a href="#" class="list-group-item list-group-item-action my-2">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1">Point Blank Zepetto</h5>
-                                                        <small>3 days ago</small>
-                                                    </div>
-                                                    <p class="mb-1">
-                                                        Anda telah melakukan perpanjangan paket 3 hari dengan member id
-                                                        ML-51325324
-                                                    </p>
-                                                </a>
-
-                                                <a href="#"
-                                                    class="list-group-item list-group-item-action active">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1 text-white">Point Blank Zepetto</h5>
-                                                        <small>3 days ago</small>
-                                                    </div>
-                                                    <p class="mb-1">
-                                                        Anda telah melakukan perpanjangan paket 3 hari dengan member id
-                                                        ML-51325324
-                                                    </p>
-                                                </a>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama</th>
+                                                            <th>Game</th>
+                                                            <th>Paket</th>
+                                                            <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
+                                                            <th>Created At</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($historyTransaksis as $historyTransaksi)
+                                                            <tr>
+                                                                <td>{{ $historyTransaksi->name }}</td>
+                                                                <td>{{ $historyTransaksi->game }}</td>
+                                                                <td>{{ $historyTransaksi->paket }}</td>
+                                                                <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
+                                                                <td>{{ $historyTransaksi->created_at }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
 
                                             </div>
                                         </div>
@@ -637,6 +623,73 @@
 
                             </div>
                         </div>
+
+                        {{-- RIWAYAT TRANSAKSI --}}
+                        <div class="row">
+                            <div class="col">
+                                <div class="card" data-aos="zoom-in" data-aos-duration="2500">
+                                    {{-- <div class="card-header mb-0">
+                                        <h4 class="card-title">Riwayat Transaksi</h4>
+                                    </div> --}}
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            @if (count($historyTransaksis) > 0)
+                                                <h4>Riwayat Transaksi</h4>
+                                                {{-- <p class="card-text">Using the most basic table up, here’s how
+                                                    <code>.table</code>-based tables look in Bootstrap. You can use any
+                                                    example
+                                                    of below table for your table and it can be use with any type of
+                                                    bootstrap tables.
+                                                </p> --}}
+                                                <!-- Table with outer spacing -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-lg" id="history-transaksi">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Produk</th>
+                                                                <th>Paket</th>
+                                                                <th>Oleh</th>
+                                                                <th>Tanggal</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($historyTransaksis as $historyTransaksi)
+                                                                <tr>
+                                                                    <td class="text-bold-500">{{ $loop->iteration }}
+                                                                    </td>
+                                                                    <td>{{ $historyTransaksi->game }}</td>
+                                                                    <td>
+                                                                        @if (Str::contains($historyTransaksi->transaction_type, 'perpanjang'))
+                                                                            {{ preg_replace('/[^0-9 +]/', '', $historyTransaksi->transaction_type) }}
+                                                                            hari
+                                                                        @elseif (Str::contains($historyTransaksi->transaction_type, 'order personal'))
+                                                                            {{ preg_replace('/[^0-9 +]/', '', $historyTransaksi->transaction_type) }}
+                                                                            hari
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $historyTransaksi->nama }}</td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $historyTransaksi->created_at }}</td>
+                                                                    <td>
+                                                                        <span class="badge bg-success">SUKSES</span>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <h2 class="m-0">Tidak ada riwayat transaksi</h2>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END RIWAYAT TRANSAKSI --}}
                     </div>
                 </section>
             </div>
@@ -649,6 +702,13 @@
     @include('layout.script')
 
     @include('sweetalert::alert')
+
+    {{-- Inisialisasi DataTable --}}
+    <script>
+        $(document).ready(function() {
+            $('#history-transaksi').DataTable();
+        });
+    </script>
 
     @if (session('login_sukses'))
         <script>
