@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryTransaksi;
 use App\Models\Member;
+use App\Models\Testimoni;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,9 @@ class LandingController extends Controller
 
     function testimoni()
     {
+        $testimonis = Testimoni::all();
+
         // Menampilkan tampilan landing testimoni
-        return view("landing-page.testimoni");
+        return view("landing-page.testimoni", compact('testimonis'));
     }
 }

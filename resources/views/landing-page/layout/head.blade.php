@@ -21,7 +21,7 @@
     <link href="{{ asset('assets-landing/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-landing/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-
+    
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets-landing/css/style.css') }}" rel="stylesheet">
 

@@ -81,8 +81,8 @@
                 <div class="col-lg-3 col-md-6 mt-5 mt-sm-0 col-6">
                     <div class="count-box">
                         <i class="bi bi-cart-check"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ $totalTransaksi->count() }}" data-purecounter-duration="1"
-                            class="purecounter"></span>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ $totalTransaksi->count() }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
                         <p>Total Transaksi</p>
                     </div>
                 </div>
@@ -101,6 +101,39 @@
     </section>
     <!-- End Counts Section -->
 
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>Team</h2>
+                <p>List Seller</p>
+            </div>
+
+            <div class="row" data-aos="fade-left">
+                @foreach ($totalUser as $data)
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="pic"><img src="{{ asset('assets-landing/img/team/user.jpg') }}" class="img-fluid" alt="">
+                            </div>
+                            <div class="member-info">
+                                <h4>{{ $data->name }}</h4>
+                                <span>{{ $data->role }}</span>
+                                {{-- <div class="social">
+                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- End Team Section -->
+
     {{-- ======= F.A.Q Section ======= --}}
     <section id="faq" class="faq section-bg">
         <div class="container">
@@ -116,7 +149,8 @@
                     <li data-aos="fade-up">
                         <i class="ri-question-line icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
                             data-bs-target="#faq-list-1">Cheatnya anti banned ? <i
-                                class="ri-arrow-down-s-line icon-show"></i><i class="ri-arrow-up-s-line icon-close"></i></a>
+                                class="ri-arrow-down-s-line icon-show"></i><i
+                                class="ri-arrow-up-s-line icon-close"></i></a>
                         <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
                             <p>
                                 Sebenernya nggak ada cheat anti banned, semuanya tergantung cara kita main. Min slow

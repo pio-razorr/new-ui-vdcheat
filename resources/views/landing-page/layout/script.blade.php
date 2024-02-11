@@ -7,6 +7,16 @@
 <script src="{{ asset('assets-landing/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('assets-landing/static/js/pages/datatables.js') }}"></script>
 
+<!-- Vendor JS Files -->
+<script src="{{ asset('assets-landing/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets-landing/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets-landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets-landing/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets-landing/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+<!-- Main JS File -->
+<script src="{{ asset('assets-landing/js/main.js') }}"></script>
+
 <!-- Inisialisasi Datatable -->
 <script>
     $(document).ready(function() {
@@ -14,14 +24,6 @@
     });
 </script>
 
-<!-- Vendor JS Files -->
-<script src="{{ asset('assets-landing/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-<script src="{{ asset('assets-landing/vendor/aos/aos.js') }}"></script>
-<script src="{{ asset('assets-landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets-landing/vendor/glightbox/js/glightbox.min.js') }}"></script>
-
-<!-- Main JS File -->
-<script src="{{ asset('assets-landing/js/main.js') }}"></script>
 
 <!-- Auto Increment Kolom Nomor Table Harga -->
 <script>

@@ -80,7 +80,7 @@
                                                 <label for="ulangi-password-baru" class="sr-only">Ulangi password
                                                     baru</label>
                                                 <input type="text" id="ulangi-password-baru" class="form-control"
-                                                    placeholder="Masukkan password lama"
+                                                    placeholder="Masukkan password baru"
                                                     value="{{ old('ulangi_password_baru') }}"
                                                     name="ulangi_password_baru" required>
                                             </div>

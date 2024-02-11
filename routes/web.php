@@ -9,6 +9,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransferSaldoController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\TestimoniController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,6 +99,13 @@ Route::middleware(['auth:web,member'])->group(function () {
 
     // Menampilkan halaman redeem voucher
     Route::get('/redeem-voucher', [DashboardController::class, 'redeem_voucher']);
+
+    // Menampilkan halaman testimoni
+    Route::get('/data-testimoni', [TestimoniController::class, 'index']);
+    Route::get('/tambah-testimoni', [TestimoniController::class, 'create']);
+    Route::post('/tambah-testimoni', [TestimoniController::class, 'store']);
+    Route::delete('/data-testimoni/{id}', [TestimoniController::class, 'destroy'])->name('images.destroy');
+
 
     // Menampilkan halaman ganti password
     Route::get('/ganti-password', [DashboardController::class, 'ganti_password']);

@@ -21,9 +21,9 @@
                     <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center justify-content-center">
                         <div data-aos="zoom-out">
                             <div class="d-flex justify-content-center align-items-center">
-                                <div class="w-25 text-center">
+                                {{-- <div class="w-25 text-center">
                                     <img src="{{ asset ('assets-landing/img/alvin-cheat.webp') }}" class="img-fluid w-75 my-3" alt="">
-                                </div>
+                                </div> --}}
                                 <h1 id="testimoni-title" class="text-center"><span>TESTIMONI</span></h1>
                             </div>
                             {{-- <div class="d-flex align-items-center">

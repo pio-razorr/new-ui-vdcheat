@@ -139,14 +139,14 @@
                 @endif
 
                 {{-- MENU KOMPENSASI --}}
-                {{-- @if (Auth::user()->role == 'ceo')
+                @if (Auth::user()->role == '#')
                     <li class="sidebar-item @if (Request::is('kompensasi')) active @endif">
                         <a href="/kompensasi" class='sidebar-link'>
                             <i class="bi bi-piggy-bank"></i>
                             <span>Kompensasi</span>
                         </a>
                     </li>
-                @endif --}}
+                @endif
 
                 {{-- MENU TUKAR POINT --}}
                 @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
@@ -159,11 +159,21 @@
                 @endif
 
                 {{-- MENU REDEEM VOUCHER --}}
-                @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
+                @if (Auth::user()->role == '#' && Auth::user()->saldo <= 10000000)
                     <li class="sidebar-item @if (Request::is('redeem-voucher')) active @endif">
                         <a href="/redeem-voucher" class='sidebar-link'>
                             <i class="bi bi-gift"></i>
                             <span>Redeem voucher</span>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- MENU TESTIMONI --}}
+                @if (Auth::user()->role == 'ceo')
+                    <li class="sidebar-item @if (Request::is('testimoni')) active @endif">
+                        <a href="/data-testimoni" class='sidebar-link'>
+                            <i class="bi bi-bag-check"></i>
+                            <span>Testimoni</span>
                         </a>
                     </li>
                 @endif

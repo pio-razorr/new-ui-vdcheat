@@ -132,14 +132,6 @@ class TransaksiController extends Controller
 
         // Ambil user login
         $authUser = Auth::user();
-        $transaksi = $authUser->transaksi;
-
-        // Tambahkan transaksi 
-        $transaksi + 1;
-
-        // Simpan ke user
-        $authUser->transaksi = $transaksi;
-        $authUser->save();
 
         // Ambil user pendapatan
         $pendapatan = $authUser->pendapatan;
@@ -160,10 +152,6 @@ class TransaksiController extends Controller
                 break;
             // dan seterusnya
         }
-
-        // Simpan ke user
-        $authUser->pendapatan = $pendapatan;
-        $authUser->save();
 
         // Ambil user saldo
         $saldo = $authUser->saldo;
@@ -236,6 +224,19 @@ class TransaksiController extends Controller
         } else {
             return redirect('/transaksi')->with('error', 'Saldo anda tidak cukup.');
         }
+
+        // Simpan pendapatan ke user
+        $authUser->pendapatan = $pendapatan;
+        $authUser->save();
+
+        $transaksi = $authUser->transaksi;
+
+        // Tambahkan transaksi 
+        $transaksi + 1;
+
+        // Simpan ke user
+        $authUser->transaksi = $transaksi;
+        $authUser->save();
 
         // Menyiapkan data yang akan dimasukkan ke dalam database
         $data['nama'] = $authUser->name; // Ambil nama pengguna
@@ -344,14 +345,6 @@ class TransaksiController extends Controller
 
         // Ambil user login
         $authUser = Auth::user();
-        $transaksi = $authUser->transaksi;
-
-        // Tambahkan transaksi 
-        $transaksi + 1;
-
-        // Simpan ke user
-        $authUser->transaksi = $transaksi;
-        $authUser->save();
 
         // Ambil user pendapatan
         $pendapatan = $authUser->pendapatan;
@@ -372,10 +365,6 @@ class TransaksiController extends Controller
                 break;
             // dan seterusnya
         }
-
-        // Simpan ke user
-        $authUser->pendapatan = $pendapatan;
-        $authUser->save();
 
         // Ambil user saldo
         $saldo = $authUser->saldo;
@@ -448,6 +437,19 @@ class TransaksiController extends Controller
         } else {
             return redirect('/transaksi')->with('error', 'Saldo anda tidak cukup.');
         }
+
+        // Simpan pendapatan ke user
+        $authUser->pendapatan = $pendapatan;
+        $authUser->save();
+
+        $transaksi = $authUser->transaksi;
+
+        // Tambahkan transaksi 
+        $transaksi + 1;
+
+        // Simpan ke user
+        $authUser->transaksi = $transaksi;
+        $authUser->save();
 
         // Mengambil data game member
         $member = Member::where('member_id', $id)->first();
