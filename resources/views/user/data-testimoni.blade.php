@@ -19,7 +19,7 @@
             <div class="page-heading">
                 <div class="row" data-aos="zoom-in">
                     <div class="col-6">
-                        <h3>Data user</h3>
+                        <h3>Data testimoni</h3>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
                         <div class="user-menu d-flex">
@@ -58,48 +58,54 @@
                                     <a href="/tambah-testimoni" class="btn btn-outline-primary">Tambah data</a>
                                 </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped mb-0" id="data-testimoni">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Gambar</th>
-                                                    <th>Deskripsi</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($testimonis as $testimoni)
+                                    @if ($testimonis->count() > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-striped mb-0" id="data-testimoni">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>
-                                                            <img src="{{ asset('/storage/posts/' . $testimoni->image) }}"
-                                                                class="img-fluid rounded-3" width="100">
-                                                        </td>
-                                                        <td>{{ $testimoni->deskripsi }}</td>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                {{-- <a href="{{ '/data-testimoni/' . $testimoni->id . '/edit' }}"
+                                                        <th>No</th>
+                                                        <th>Gambar</th>
+                                                        <th>Deskripsi</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($testimonis as $testimoni)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>
+                                                                <img src="{{ asset('/storage/posts/' . $testimoni->image) }}"
+                                                                    class="img-fluid rounded-3" width="100">
+                                                            </td>
+                                                            <td>{{ $testimoni->deskripsi }}</td>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    {{-- <a href="{{ '/data-testimoni/' . $testimoni->id . '/edit' }}"
                                                                     class="btn icon btn-sm btn-primary me-2">
                                                                     <i class="bi bi-pencil"></i>
                                                                 </a> --}}
-                                                                <form action="{{ route('images.destroy', $testimoni->id) }}"
-                                                                    method="POST" class="delete-form">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn icon btn-sm btn-danger"
-                                                                        data-confirm-delete="true">
-                                                                        <i class="bi bi-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                                    <form
+                                                                        action="{{ route('images.destroy', $testimoni->id) }}"
+                                                                        method="POST" class="delete-form">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn icon btn-sm btn-danger"
+                                                                            data-confirm-delete="true">
+                                                                            <i class="bi bi-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @else
+                                        <h1>Data kosong</h1>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

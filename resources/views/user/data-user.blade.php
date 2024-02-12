@@ -260,8 +260,7 @@
                                                                 <div class="card-body pb-0">
                                                                     <div
                                                                         class="alert alert-light-success color-success">
-                                                                        <i class="bi bi-check-circle me-2"></i>Devil
-                                                                        Cheat - Pendaftaran Akun.
+                                                                        <i class="bi bi-check-circle me-2"></i>VVIP MODS - Pendaftaran Akun.
                                                                     </div>
                                                                     <div class="list-group">
 

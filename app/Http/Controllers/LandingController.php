@@ -15,27 +15,34 @@ class LandingController extends Controller
         $totalUser = User::all();
         $totalMember = Member::all();
         $totalTransaksi = HistoryTransaksi::all();
+        $testimonis = Testimoni::all();
 
         // Menampilkan tampilan landing home
-        return view("landing-page.index", compact('totalUser', 'totalMember', 'totalTransaksi'));
+        return view("landing-page.index", compact('totalUser', 'totalMember', 'totalTransaksi', 'testimonis'));
     }
 
     function about()
     {
+        $testimonis = Testimoni::all();
+
         // Menampilkan tampilan landing about
-        return view("landing-page.about");
+        return view("landing-page.about", compact('testimonis'));
     }
 
     function harga()
     {
+        $testimonis = Testimoni::all();
+
         // Menampilkan tampilan landing harga
-        return view("landing-page.harga");
+        return view("landing-page.harga", compact('testimonis'));
     }
 
     function galeri()
     {
+        $testimonis = Testimoni::all();
+
         // Menampilkan tampilan landing galeri
-        return view("landing-page.galeri");
+        return view("landing-page.galeri", compact('testimonis'));
     }
 
     function testimoni()

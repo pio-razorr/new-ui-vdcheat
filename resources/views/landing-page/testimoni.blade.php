@@ -17,7 +17,7 @@
                             <a href="{{ asset('/storage/posts/' . $testimoni->image) }}" class="gallery-lightbox"
                                 data-description="{{ $testimoni->deskripsi }}">
                                 <img src="{{ asset('/storage/posts/' . $testimoni->image) }}" alt=""
-                                    class="img-fluid" style="width: 50%">
+                                    class="img-fluid rounded-3" style="width: 50%">
                             </a>
                         </div>
                     </div>

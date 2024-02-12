@@ -23,7 +23,9 @@
                 <li><a class="nav-link scrollto" href="/about">About</a></li>
                 <li><a class="nav-link scrollto" href="/harga">Harga</a></li>
                 <li><a class="nav-link scrollto" href="/galeri">Galeri</a></li>
-                <li><a class="nav-link scrollto" href="/testimoni">Testimoni</a></li>
+                @if ($testimonis->count() > 0)
+                    <li><a class="nav-link scrollto" href="/testimoni">Testimoni</a></li>
+                @endif
                 <li><a class="nav-link scrollto" href="/login">Login</a></li>
                 {{-- End Navbar baru --}}
             </ul>

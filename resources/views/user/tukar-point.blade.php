@@ -101,8 +101,7 @@
                                 <div class="card-content">
                                     <div class="card-body pb-0">
                                         <div class="alert alert-light-success color-success">
-                                            <i class="bi bi-check-circle me-2"></i>Devil
-                                            Cheat - Tukar Point.
+                                            <i class="bi bi-check-circle me-2"></i>VVIP MODS - Tukar Point.
                                         </div>
                                         <div class="list-group">
 
