@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,7 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
+
         DB::table('members')->insert(
             [
                 'name' => 'member pio',
@@ -25,5 +27,8 @@ class MemberSeeder extends Seeder
                 'created_at' => Carbon::now(),
             ]
         );
+
+        // Tambah data sebanyak 50 secara acak
+        Member::factory()->count(37)->create();
     }
 }

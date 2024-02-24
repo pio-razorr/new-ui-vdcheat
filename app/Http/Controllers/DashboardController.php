@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryTransaksi;
 use App\Models\Member;
+use App\Models\StatusGame;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -15,7 +16,22 @@ class DashboardController extends Controller
     function index()
     {
         // Mengambil informasi pengguna yang saat ini masuk (diotorisasi)
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
         $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
+
+        // Mengambil data dari model StatusGame
+        $game = StatusGame::all();
 
         // Mendapatkan waktu saat ini dengan menggunakan Carbon untuk manajemen tanggal dan waktu yang lebih baik
         $now = Carbon::now();
@@ -39,7 +55,7 @@ class DashboardController extends Controller
         // Mengirim data pengguna yang saat ini masuk ($authUser), daftar anggota yang sesuai ($members),
         // dan data history transaksi yang sesuai ($historyTransaksis) ke tampilan 'user.index'.
         // Data ini akan digunakan untuk menampilkan informasi pengguna, daftar anggota, dan history transaksi yang memenuhi kondisi tertentu di tampilan.
-        return view('user.index', compact('authUser', 'members', 'historyTransaksis'));
+        return view('user.index', compact('authUser', 'members', 'historyTransaksis', 'game'));
     }
 
 
@@ -67,7 +83,9 @@ class DashboardController extends Controller
     {
         // Validasi input
         $request->validate([
-            'nominal_tukar' => 'required | numeric | min:1',
+            'nominal_tukar' => 'required | numeric | min:10000',
+        ], [
+            'nominal_tukar.min' => 'Minimal tukar point adalah 10.000.'
         ]);
 
         $authUser = Auth::user();
@@ -103,24 +121,120 @@ class DashboardController extends Controller
 
 
 
+    // VIEW REDEEM VOUCHER
     function redeem_voucher()
     {
         $authUser = Auth::user();
 
         return view('user.redeem-voucher', compact('authUser'));
     }
+    // END VIEW REDEEM VOUCHER
 
 
 
+    // VIEW PERATURAN
+    function peraturan()
+    {
+        // Saya buat ini supaya saat login member kemudian ingin akses ke link data member maka redirect ke 404
+        // Periksa apakah pengguna telah diautentikasi
+        if (!Auth::check()) {
+            // Jika tidak, arahkan kembali dengan pesan kesalahan
+            return redirect('404');
+        }
 
-    // VIEW GANTI PASSWORD
-    public function ganti_password()
+        $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
+
+        return view('user.peraturan', compact('authUser'));
+    }
+    // END VIEW PERATURAN
+
+
+
+    // VIEW PROFIL AKUN
+    function profil()
+    {
+        // Saya buat ini supaya saat login member kemudian ingin akses ke link data member maka redirect ke 404
+        // Periksa apakah pengguna telah diautentikasi
+        if (!Auth::check()) {
+            // Jika tidak, arahkan kembali dengan pesan kesalahan
+            return redirect('404');
+        }
+
+        $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
+
+        return view('user.profil', compact('authUser'));
+    }
+    // END VIEW PROFIL AKUN
+
+
+    // PROSES UBAH PROFIL
+    function ubah_profil(Request $request)
     {
         $authUser = Auth::user();
 
-        return view('user.ganti-password', compact('authUser'));
+        // Validasi data yang diterima dari form
+        $data = $request->validate([
+            'nama' => 'required',
+            'no_hp' => 'required',
+        ]);
+
+        // Manipulasi nomor telepon
+        $no_hp = $data['no_hp'];
+
+        // Hapus karakter "0" dari awal nomor telepon jika ada
+        $no_hp = ltrim($no_hp, '0');
+
+        // Tambahkan awalan "62" ke nomor telepon
+        $no_hp = '62' . $no_hp;
+
+        // Update data profil
+        $authUser->update([
+            'name' => $data['nama'],
+            'no_hp' => $no_hp,
+        ]);
+
+        return back()->with('success', 'Anda telah berhasil merubah profil.');
     }
-    // END VIEW GANTI PASSWORD
+    // END PROSES UBAH PROFIL
+
+
+    // PROSES UBAH PROFIL SOSMED
+    function ubah_profil_sosmed(Request $request)
+    {
+        $authUser = Auth::user();
+
+        // Validasi data yang diterima dari form
+        $data = $request->validate([
+            'instagram' => 'required',
+            'facebook' => 'required',
+        ]);
+
+        // Update data profil
+        $authUser->update([
+            'instagram' => $data['instagram'],
+            'facebook' => $data['facebook'],
+        ]);
+
+        return back()->with('success', 'Anda telah berhasil merubah profil.');
+    }
+    // END PROSES UBAH PROFIL SOSMED
+
 
     // PROSES GANTI PASSWORD
     public function proses_ganti_password(Request $request)

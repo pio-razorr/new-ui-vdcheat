@@ -13,7 +13,7 @@
     <section id="hero">
 
         {{-- Home --}}
-        @yield('home-hero')
+        @yield('hero')
 
         @unless (Request::is('/'))
             <div class="container">
@@ -57,23 +57,7 @@
 
     {{-- ======= Main Section ======= --}}
     <main id="main">
-
-        {{-- Home --}}
-        @yield('home')
-
-        {{-- About --}}
-        @yield('about')
-
-        {{-- Harga --}}
-        @yield('harga')
-
-        {{-- Gallery --}}
-        @yield('galeri')
-
-        {{-- Testimoni --}}
-        @yield('testimoni')
-
-
+        @yield('content')
     </main>
     {{-- End Main --}}
 

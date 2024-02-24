@@ -2,21 +2,83 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryTransferSaldo;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransferSaldoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $authUser = Auth::user();
+
+    //     return view('user.transfer-saldo', compact('authUser'));
+    // }
+
+    public function index(Request $request)
     {
+        $dataUser = [
+            "username" => null,
+            "pesan" => null,
+        ];
+
+        if ($request->username) {
+            $user = User::where('username', $request->username)->first();
+
+            if ($user) {
+                $dataUser = [
+                    "username" => $request->username,
+                    "pesan" => "$user->name | " . ($user->role == 'resseler' ? 'Resseler' : $user->role)
+                ];
+
+                if ($user->role === 'ceo') {
+                    Alert::error('Transfer saldo tidak diizinkan untuk akun dengan level CEO.');
+                    return redirect('/transfer-saldo');
+                } elseif ($user->role === 'admin') {
+                    Alert::error('Transfer saldo tidak diizinkan untuk akun dengan level ADMIN.');
+                    return redirect('/transfer-saldo');
+                } elseif ($user->role === 'resseler_vip') {
+                    Alert::error('Transfer saldo tidak diizinkan untuk akun dengan level RESSELER VIP.');
+                    return redirect('/transfer-saldo');
+                }
+
+                Alert::success('Username ditemukan.');
+                session()->flash('success-username', 'Username ditemukan');
+            } else {
+                $dataUser = [
+                    "username" => $request->username,
+                    "pesan" => "-"
+                ];
+                Alert::error('Username tidak ditemukan.');
+            }
+        }
+
         $authUser = Auth::user();
 
-        return view('user.transfer-saldo', compact('authUser'));
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
+
+        // Mengambil semua data transaksi dari model HistoryTransaksi
+        if ($authUser->role === 'ceo') {
+            // Jika pengguna adalah CEO, maka ambil semua data history transaksi.
+            $historyTransferSaldos = HistoryTransferSaldo::all();
+        } else {
+            // Jika bukan CEO, maka ambil data history transaksi sesuai ID pengguna yang sedang di autentikasi.
+            $historyTransferSaldos = HistoryTransferSaldo::where('nama', $authUser->name)->get();
+        }
+
+        return view('user.transfer-saldo', compact('authUser', 'dataUser', 'historyTransferSaldos'));
     }
 
     /**
@@ -36,31 +98,34 @@ class TransferSaldoController extends Controller
         $userTujuan = User::where('username', $request->input('username'))->first();
 
         // Jika pengguna dengan 'username' tujuan tidak ditemukan, kembalikan dengan pesan kesalahan
-        if (!$userTujuan) {
-            return redirect('/transfer-saldo')->with('errors', 'Username yang dituju tidak tersedia.')->withInput();
-        }
+        // if (!$userTujuan) {
+        //     return redirect('/transfer-saldo')->with('errors', 'Username yang dituju tidak tersedia.')->withInput();
+        // }
 
         // Validasi Input
         $request->validate([
             'username' => 'required',
-            'saldo' => 'required|numeric|min:50000',
-        ], [
-            'saldo.min' => 'Nominal transfer saldo minimal Rp. 50.000',
+            'saldo' => 'required | numeric',
         ]);
 
-        // Validasi tambahan: Jika rol  e adalah admin, CEO, atau reseller dengan saldo di atas 10 juta, kembalikan dengan pesan kesalahan
-        if ($userTujuan->role == 'admin') {
-            return redirect('/transfer-saldo')->with('warning', 'Transfer saldo tidak diizinkan untuk akun dengan level Admin.')->withInput();
-        } elseif ($userTujuan->role == 'ceo') {
-            return redirect('/transfer-saldo')->with('warning', 'Transfer saldo tidak diizinkan untuk akun dengan level CEO.')->withInput();
-        } elseif ($userTujuan->role == 'resseler' && $userTujuan->saldo > 10000000) {
-            return redirect('/transfer-saldo')->with('warning', 'Transfer saldo tidak diizinkan untuk akun dengan level Resseler VIP.')->withInput();
-        }
+        // $request->validate([
+        //     'username' => 'required',
+        //     'saldo' => 'required|numeric|min:50000',
+        // ], [
+        //     'saldo.min' => 'Nominal transfer saldo minimal Rp. 50.000',
+        // ]);
 
         // Tambahkan saldo ke pengguna tujuan
         $nominalTransfer = $request->input('saldo');
         $userTujuan->saldo += $nominalTransfer;
         $userTujuan->save();
+
+        // Simpan data transfer ke model history transfer saldo
+        HistoryTransferSaldo::create([
+            'nama' => Auth::user()->name, // Ganti dengan nama pengguna yang sesuai
+            'kepada' => $userTujuan->name,
+            'total' => $nominalTransfer,
+        ]);
 
         // Simpan nominal transfer ke dalam sesi untuk ditampilkan di halaman '/transfer-saldo'
         session(['session.nominal-transfer' => $nominalTransfer]);

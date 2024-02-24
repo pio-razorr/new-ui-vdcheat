@@ -1,6 +1,6 @@
 @extends('landing-page.layout.main')
 
-@section('harga')
+@section('content')
     {{-- ======= Pricing Section ======= --}}
     <section id="pricing" class="pricing">
         <div class="container">

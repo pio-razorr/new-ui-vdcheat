@@ -13,7 +13,23 @@ class DataMemberController extends Controller
      */
     public function index()
     {
+
+        // Saya buat ini supaya saat login member kemudian ingin akses ke link data member maka redirect ke 404
+        // Periksa apakah pengguna telah diautentikasi
+        if (!Auth::check()) {
+            // Jika tidak, arahkan kembali dengan pesan kesalahan
+            return redirect('404');
+        }
+
         $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
 
         if (Auth::user()->role == "ceo") {
             $members = Member::all();
@@ -57,6 +73,14 @@ class DataMemberController extends Controller
         $data = Member::where('id', $id)->first();
 
         $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
 
         return view('user.ubah-serial', compact('authUser'))->with('data', $data);
     }

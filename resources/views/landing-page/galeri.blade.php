@@ -1,6 +1,6 @@
 @extends('landing-page.layout.main')
 
-@section('galeri')
+@section('content')
 
     {{-- ======= Gallery Section ======= --}}
     <section id="gallery" class="gallery">

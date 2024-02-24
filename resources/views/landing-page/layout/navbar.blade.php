@@ -20,13 +20,28 @@
 
                 {{-- Navbar baru --}}
                 <li><a class="nav-link scrollto" href="/">Home</a></li>
-                <li><a class="nav-link scrollto" href="/about">About</a></li>
+                <li><a class="nav-link scrollto" href="/tentang">Tentang</a></li>
                 <li><a class="nav-link scrollto" href="/harga">Harga</a></li>
                 <li><a class="nav-link scrollto" href="/galeri">Galeri</a></li>
+
                 @if ($testimonis->count() > 0)
                     <li><a class="nav-link scrollto" href="/testimoni">Testimoni</a></li>
                 @endif
-                <li><a class="nav-link scrollto" href="/login">Login</a></li>
+
+                {{-- Jika user dan member sudah login, maka navbar login dihilangkan --}}
+                @if (!Auth::guard('web')->check() && !Auth::guard('member')->check())
+                    <li><a class="nav-link scrollto" href="/login">Login</a></li>
+                @endif
+
+                {{-- Jika user sudah login, maka menampilkan navbar beranda --}}
+                @if (Auth::guard('web')->check())
+                    <li><a class="nav-link scrollto" href="/dashboard">Beranda</a></li>
+                @endif
+
+                {{-- Jika member sudah login, maka menampilkan navbar beranda --}}
+                @if (Auth::guard('member')->check())
+                    <li><a class="nav-link scrollto" href="/dashboard-member">Beranda</a></li>
+                @endif
                 {{-- End Navbar baru --}}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>

@@ -1,6 +1,6 @@
 @extends('landing-page.layout.main')
 
-@section('home-hero')
+@section('hero')
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center justify-content-center">
@@ -54,7 +54,7 @@
     </svg>
 @endsection
 
-@section('home')
+@section('content')
     <!-- ======= Counts Section ======= -->
     <section id="counts" class="counts">
         <div class="container">
@@ -65,7 +65,7 @@
                         <i class="bi bi-person-circle"></i>
                         <span data-purecounter-start="0" data-purecounter-end="{{ $totalUser->count() }}"
                             data-purecounter-duration="1" class="purecounter"></span>
-                        <p>Total User</p>
+                        <p>Total user</p>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                         <i class="bi bi-people-fill"></i>
                         <span data-purecounter-start="0" data-purecounter-end="{{ $totalMember->count() }}"
                             data-purecounter-duration="1" class="purecounter"></span>
-                        <p>Total Member</p>
+                        <p>Total member</p>
                     </div>
                 </div>
 
@@ -83,16 +83,16 @@
                         <i class="bi bi-cart-check"></i>
                         <span data-purecounter-start="0" data-purecounter-end="{{ $totalTransaksi->count() }}"
                             data-purecounter-duration="1" class="purecounter"></span>
-                        <p>Total Transaksi</p>
+                        <p>Total transaksi</p>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6 mt-5 mt-sm-0 col-6">
                     <div class="count-box">
                         <i class="bi bi-discord"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="11" data-purecounter-duration="1"
-                            class="purecounter"></span>
-                        <p>Game yang tersedia</p>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ $totalGame->count() }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
+                        <p>Total game</p>
                     </div>
                 </div>
 
@@ -107,32 +107,119 @@
 
             <div class="section-title" data-aos="fade-up">
                 <h2>Team</h2>
-                <p>List Seller</p>
+                <p>Daftar Seller</p>
             </div>
 
             <div class="row" data-aos="fade-left">
-                @foreach ($totalUser as $data)
-                    <div class="col-lg-3 col-md-6 mb-4">
+                @foreach ($totalUserPaginate as $data)
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                            <div class="pic"><img src="{{ asset('assets-landing/img/team/user.jpg') }}" class="img-fluid" alt="">
+                            <div class="pic"><img src="{{ asset('assets-landing/img/team/user.webp') }}"
+                                    class="img-fluid" alt="">
                             </div>
                             <div class="member-info">
                                 <h4>{{ $data->name }}</h4>
-                                <span>{{ $data->role }}</span>
-                                {{-- <div class="social">
-                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                </div> --}}
+                                <span>
+                                    @if ($data->role == 'resseler')
+                                        Resseler
+                                    @elseif ($data->role == 'resseler_vip')
+                                        Resseler VIP
+                                    @elseif ($data->role == 'admin')
+                                        Admin
+                                    @elseif ($data->role == 'ceo')
+                                        CEO
+                                    @endif
+                                </span>
+                                <div class="social">
+                                    {{-- Whatsapp --}}
+                                    @if (!empty($data->no_hp))
+                                        <a href="https://wa.me/{{ $data->no_hp }}" target="_blank"><i
+                                                class="bi bi-whatsapp"></i></a>
+                                    @endif
+
+                                    {{-- Instagram --}}
+                                    @if (!empty($data->instagram))
+                                        <a href="{{ $data->instagram }}" target="_blank"><i
+                                                class="bi bi-instagram"></i></a>
+                                    @endif
+
+                                    {{-- Facebook --}}
+                                    @if (!empty($data->facebook))
+                                        <a href="{{ $data->facebook }}" target="_blank"><i
+                                                class="bi bi-facebook"></i></a>
+                                    @endif
+                                    {{-- <a href=""><i class="bi bi-twitter"></i></a> --}}
+                                    {{-- <a href=""><i class="bi bi-linkedin"></i></a> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
+                {{ $totalUserPaginate->links() }}
             </div>
         </div>
     </section>
     <!-- End Team Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{{ asset('assets-landing/img/team/user.webp') }}" class="testimonial-img"
+                                alt="">
+                            <h3>Alvin Ramadhani</h3>
+                            <h4>CEO</h4>
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Programnya sangat mudah dipahami bagi pemula yang ingin mencoba hal baru dalam dunia esport.
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{{ asset('assets-landing/img/team/user.webp') }}" class="testimonial-img"
+                                alt="">
+                            <h3>Iqhwan Siswanto</h3>
+                            <h4>Admin</h4>
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Untuk programnya mantap, dan juga harganya bersahabat untuk di kalangan pelajar.
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{{ asset('assets-landing/img/team/user-2.webp') }}" class="testimonial-img"
+                                alt="">
+                            <h3>Ikuza Dev</h3>
+                            <h4>CEO D5STUDIO</h4>
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Mantep banget coy, dengan pelayanan yang ramah serta penjelasan dari admin cara penggunaan programnya sangat mudah dipahamin buat pemula seperti saya ini.
+                                Rekomended pokoknya 👌
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End testimonial item -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Testimonials Section -->
 
     {{-- ======= F.A.Q Section ======= --}}
     <section id="faq" class="faq section-bg">

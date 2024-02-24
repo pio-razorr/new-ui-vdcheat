@@ -19,26 +19,23 @@ class AktivasiUserController extends Controller
 
         // AKTIVASI USER
         $dataUser = [
-            "aktivasi" => false,
             "input_username" => null,
             "pesan" => null,
         ];
 
         if ($request->username) {
-            $user = User::where('username', $request->username)->whereIn('role', ['admin', 'resseler'])->first();
+            $user = User::where('username', $request->username)->whereIn('role', ['admin', 'resseler', 'resseler_vip'])->first();
 
             if ($user) {
                 $dataUser = [
-                    "aktivasi" => true,
                     "input_username" => $request->username,
-                    "pesan" => $user->name . ' | ' . ($user->role == 'resseler' ? 'Resseler' : 'Admin')
+                    "pesan" => $user->name . ' | ' .
+                        ($user->role == 'resseler' ? 'Resseler' : ($user->role == 'resseler_vip' ? 'Resseler VIP' : 'Admin'))
                 ];
                 Alert::success('Username ditemukan.');
                 session()->flash('success', 'Username ditemukan.');
-
             } else {
                 $dataUser = [
-                    "aktivasi" => true,
                     "input_username" => $request->username,
                     "pesan" => "-"
                 ];
@@ -91,6 +88,11 @@ class AktivasiUserController extends Controller
 
         // Temukan pengguna berdasarkan username
         $user = User::where('username', $username)->first();
+
+        // Memeriksa peran pengguna sebelum mengubahnya menjadi 'reseller_vip'
+        if ($user->role === 'resseler') {
+            $user->role = 'resseler_vip';
+        }
 
         // Aktifkan pengguna dengan menetapkan nilai expired_date dan saldo
         $user->expired_date = now()->addMonth();

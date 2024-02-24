@@ -45,28 +45,18 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                {{-- MENU DASHBOARD --}}
-                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler')
+                {{-- MENU BERANDA --}}
+                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler' || Auth::user()->role == 'resseler_vip')
                     <li class="sidebar-item @if (Request::is('dashboard')) active @endif">
                         <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                             <i class="bi bi-house"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- MENU DASHBOARD MEMBER --}}
-                @if (Auth::guard('member')->check())
-                    <li class="sidebar-item @if (Request::is('dashboard-member')) active @endif">
-                        <a href="{{ url('/dashboard-member') }}" class='sidebar-link'>
-                            <i class="bi bi-house"></i>
-                            <span>Dashboard</span>
+                            <span>Beranda</span>
                         </a>
                     </li>
                 @endif
 
                 {{-- MENU TRANSAKSI --}}
-                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler')
+                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler' || Auth::user()->role == 'resseler_vip')
                     <li class="sidebar-item @if (Request::is('transaksi')) active @endif">
                         <a href="/transaksi" class='sidebar-link'>
                             <i class="bi bi-bag"></i>
@@ -75,11 +65,11 @@
                     </li>
                 @endif
 
-                {{-- MENU DOWNLOAD --}}
+                {{-- MENU UNDUH --}}
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-download"></i>
-                        <span>Download</span>
+                        <span>Unduh</span>
                     </a>
 
                     <ul class="submenu ">
@@ -99,11 +89,11 @@
                 </li>
 
                 {{-- MENU DATA MEMBER --}}
-                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler')
+                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler' || Auth::user()->role == 'resseler_vip')
                     <li class="sidebar-item @if (Request::is('data-member')) active @endif">
                         <a href="/data-member" class='sidebar-link'>
                             <i class="bi bi-people"></i>
-                            <span>Data Member</span>
+                            <span>Data member</span>
                         </a>
                     </li>
                 @endif
@@ -113,7 +103,7 @@
                     <li class="sidebar-item @if (Request::is('data-user')) active @endif">
                         <a href="/data-user" class='sidebar-link'>
                             <i class="bi bi-person"></i>
-                            <span>Data user</span>
+                            <span>Data pengguna</span>
                         </a>
                     </li>
                 @endif
@@ -149,7 +139,7 @@
                 @endif
 
                 {{-- MENU TUKAR POINT --}}
-                @if (Auth::user()->role == 'resseler' && Auth::user()->saldo <= 10000000)
+                @if (Auth::user()->role == 'resseler')
                     <li class="sidebar-item @if (Request::is('tukar-point')) active @endif">
                         <a href="/tukar-point" class='sidebar-link'>
                             <i class="bi bi-coin"></i>
@@ -159,7 +149,7 @@
                 @endif
 
                 {{-- MENU REDEEM VOUCHER --}}
-                @if (Auth::user()->role == '#' && Auth::user()->saldo <= 10000000)
+                @if (Auth::user()->role == '#')
                     <li class="sidebar-item @if (Request::is('redeem-voucher')) active @endif">
                         <a href="/redeem-voucher" class='sidebar-link'>
                             <i class="bi bi-gift"></i>
@@ -170,7 +160,7 @@
 
                 {{-- MENU TESTIMONI --}}
                 @if (Auth::user()->role == 'ceo')
-                    <li class="sidebar-item @if (Request::is('testimoni')) active @endif">
+                    <li class="sidebar-item @if (Request::is('data-testimoni')) active @endif">
                         <a href="/data-testimoni" class='sidebar-link'>
                             <i class="bi bi-bag-check"></i>
                             <span>Testimoni</span>
@@ -178,21 +168,31 @@
                     </li>
                 @endif
 
-                {{-- MENU GANTI PASSWORD --}}
-                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler')
-                    <li class="sidebar-item @if (Request::is('ganti-password')) active @endif">
-                        <a href="/ganti-password" class='sidebar-link'>
-                            <i class="bi bi-shield-lock"></i>
-                            <span>Ganti password</span>
+                {{-- MENU STATUS GAME --}}
+                @if (Auth::user()->role == 'ceo')
+                    <li class="sidebar-item @if (Request::is('data-status-game')) active @endif">
+                        <a href="/data-status-game" class='sidebar-link'>
+                            <i class="bi bi-activity"></i>
+                            <span>Status Game</span>
                         </a>
                     </li>
                 @endif
 
-                {{-- MENU LOGOUT --}}
+                {{-- MENU PERATURAN --}}
+                @if (Auth::user()->role == 'ceo' || Auth::user()->role == 'admin' || Auth::user()->role == 'resseler' || Auth::user()->role == 'resseler_vip')
+                    <li class="sidebar-item @if (Request::is('peraturan')) active @endif">
+                        <a href="/peraturan" class='sidebar-link'>
+                            <i class="bi bi-clipboard-check"></i>
+                            <span>Peraturan</span>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- MENU KELUAR --}}
                 <li class="sidebar-item">
-                    <a href="/logout" class='sidebar-link'>
+                    <a href="{{ route('user.logout') }}" class='sidebar-link'>
                         <i class="bi bi-box-arrow-left"></i>
-                        <span>Logout</span>
+                        <span>Keluar</span>
                     </a>
                 </li>
 

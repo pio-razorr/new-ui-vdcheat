@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('layout.head')
+@include('user.layout.head')
 
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
-        @include('layout.sidebar')
+        @include('member.layout.sidebar')
 
         <div id="main">
             <header class="mb-3">
@@ -19,7 +19,7 @@
             <div class="page-heading">
                 <div class="row">
                     <div class="col-6">
-                        <h3>Dashboard</h3>
+                        <h3>Beranda</h3>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
                         <div class="user-menu d-flex">
@@ -29,7 +29,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src={{ asset('assets-pio/img/alvin-cheat.png') }} />
+                                    <img src={{ asset('assets-pio/img/alvin-cheat.webp') }} />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <i class="bi bi-calendar-event me-1"></i>
-                                                    Tgl. Expired
+                                                    Tgl. Kadaluwarsa
                                                 </div>
                                                 <div class="col-6 text-end">
                                                     {{ $authMember->expired_date }}
@@ -130,7 +130,7 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <i class="bi bi-clock me-1"></i>
-                                                    Sisa Durasi
+                                                    Sisa durasi
                                                 </div>
                                                 <div class="col-6 text-end">
                                                     @if (strtotime($authMember->expired_date) < time())
@@ -146,7 +146,7 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <i class="bi bi-database me-1"></i>
-                                                        Serial Aktif
+                                                        Serial aktif
                                                     </div>
                                                     <div class="col-6 text-end">
                                                         {{ $authMember->serial }}
@@ -166,7 +166,7 @@
                         {{-- END INFORMASI MEMBER --}}
 
                         {{-- REDEEM VOUCHER --}}
-                        <div class="card" data-aos="zoom-in">
+                        {{-- <div class="card" data-aos="zoom-in">
                             <div class="card-content">
                                 <div class="card-body">
                                     <h4 class="card-title mb-4">Redeem Voucher</h4>
@@ -187,66 +187,8 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- END REDEEM VOUCHER --}}
-
-                    </div>
-
-                    <div class="col-lg-6">
-
-                        {{-- STATUS CHEAT --}}
-                        <div class="card" data-aos="zoom-in">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title mb-4">Status Cheat</h4>
-                                    {{-- <p class="card-text">
-                                        Gummies bonbon apple pie fruitcake icing biscuit apple pie jelly-o sweet roll.
-                                        Toffee
-                                        sugar plum sugar plum jelly-o jujubes bonbon dessert carrot cake.
-                                    </p> --}}
-                                    <ul class="list-group">
-
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Mobile Legends
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    <span class="badge bg-success">AKTIF</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item my-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Point Blank
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    <span class="badge bg-danger">MAINTENANCE</span>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Point Blank Private
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    <span class="badge bg-success">AKTIF</span>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            {{-- <div class="card-footer d-flex justify-content-between">
-                                <span>Card Footer</span>
-                                <button class="btn btn-light-primary">Read More</button>
-                            </div> --}}
-                        </div>
-                        {{-- END STATUS CHEAT --}}
 
                         {{-- UBAH SERIAL --}}
                         @if ($authMember->game == 'Point Blank Zepetto' || $authMember->game == 'Point Blank Private')
@@ -255,7 +197,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title mb-4">Ubah Serial</h4>
                                         <p class="card-text">
-                                            Ubah serial digunakan jika Anda ingin menggunakan cheat pada perangkat PC
+                                            Ubah serial digunakan jika anda ingin menggunakan cheat pada perangkat PC
                                             yang
                                             berbeda.
                                         </p>
@@ -288,15 +230,58 @@
 
                     </div>
 
+                    <div class="col-lg-6">
+
+                        {{-- STATUS CHEAT --}}
+                        <div class="card" data-aos="zoom-in">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-4">Status Cheat</h4>
+                                    {{-- <p class="card-text">
+                                        Gummies bonbon apple pie fruitcake icing biscuit apple pie jelly-o sweet roll.
+                                        Toffee
+                                        sugar plum sugar plum jelly-o jujubes bonbon dessert carrot cake.
+                                    </p> --}}
+                                    <ul class="list-group">
+
+                                        @foreach ($game as $data)
+                                            <li class="list-group-item mb-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        {{ $data->nama_game }}
+                                                    </div>
+                                                    <div class="col-6 text-end">
+                                                        @if ($data->status === 'aktif')
+                                                            <span class="badge bg-success">AKTIF</span>
+                                                        @elseif ($data->status === 'tidak_aktif')
+                                                            <span class="badge bg-danger">MAINTENANCE</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
+                            </div>
+                            {{-- <div class="card-footer d-flex justify-content-between">
+                                <span>Card Footer</span>
+                                <button class="btn btn-light-primary">Read More</button>
+                            </div> --}}
+                        </div>
+                        {{-- END STATUS CHEAT --}}
+
+                    </div>
+
                 </section>
             </div>
 
-            @include('layout.footer')
+            @include('user.layout.footer')
         </div>
 
     </div>
 
-    @include('layout.script')
+    @include('user.layout.script')
 
     @include('sweetalert::alert')
 

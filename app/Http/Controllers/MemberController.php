@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\StatusGame;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,17 @@ class MemberController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
+
+        if ($request->is('login')) {
+            return abort(404);
+        }
+
         // Mengambil data anggota yang sedang masuk menggunakan Auth::guard
         $authMember = Auth::guard('member')->user();
+
+        $game = StatusGame::all();
 
         // Ambil tanggal kedaluwarsa dari model member
         $expiredDate = Carbon::parse($authMember->expired_date);
@@ -37,7 +45,7 @@ class MemberController extends Controller
         }
 
         // Menampilkan tampilan view 'member.index' dan mengirim data anggota yang sedang masuk ke view 'member.index'
-        return view('member.index', compact('authMember', 'remainingDuration'));
+        return view('member.index', compact('authMember', 'remainingDuration', 'game'));
     }
 
     /**

@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             MemberSeeder::class,
+            StatusGameSeeder::class,
             // tambahkan seeder lain jika diperlukan
         ]);
-        
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('game');
             $table->string('member_id')->nullable();
             $table->string('serial')->nullable();
+            $table->enum('role', ['member'])->default('member');
             $table->datetime('expired_date');
             $table->string('created_by');
             $table->timestamps();

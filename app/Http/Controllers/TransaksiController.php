@@ -18,6 +18,13 @@ class TransaksiController extends Controller
      */
     public function index(Request $request)
     {
+        // Saya buat ini supaya saat login member kemudian ingin akses ke link data member maka redirect ke 404
+        // Periksa apakah pengguna telah diautentikasi
+        if (!Auth::check()) {
+            // Jika tidak, arahkan kembali dengan pesan kesalahan
+            return redirect('404');
+        }
+
         $dataMember = [
             "perpanjang" => false,
             "input_member" => null,
@@ -50,6 +57,14 @@ class TransaksiController extends Controller
         }
 
         $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
 
         return view('user.transaksi', compact('authUser', 'dataMember'));
     }
@@ -231,7 +246,7 @@ class TransaksiController extends Controller
 
         $transaksi = $authUser->transaksi;
 
-        // Tambahkan transaksi 
+        // Tambahkan transaksi
         $transaksi + 1;
 
         // Simpan ke user
@@ -444,7 +459,7 @@ class TransaksiController extends Controller
 
         $transaksi = $authUser->transaksi;
 
-        // Tambahkan transaksi 
+        // Tambahkan transaksi
         $transaksi + 1;
 
         // Simpan ke user

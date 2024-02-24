@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('layout.head')
+@include('user.layout.head')
 
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
-
-        {{-- @include('layout.sidebar') --}}
 
         <div class="container-fluid d-flex align-items-center vh-100">
 
@@ -55,7 +53,7 @@
                                     {{-- End toggle dark mode --}}
 
                                     <div class="d-flex justify-content-center">
-                                        <img src="{{asset('assets-pio/img/alvin-cheat.png')}}" alt="" class="img-fluid w-25">
+                                        <img src="{{ asset('assets-pio/img/alvin-cheat.webp') }}" alt="" class="img-fluid w-25">
                                     </div>
 
                                     <h4 class="card-title text-center">Seller Login</h4>
@@ -120,12 +118,12 @@
                 </section>
             </div>
 
-            {{-- @include('layout.footer') --}}
+            {{-- @include('user.layout.footer') --}}
         </div>
 
     </div>
 
-    @include('layout.script')
+    @include('user.layout.script')
 
     <script>
         AOS.init();

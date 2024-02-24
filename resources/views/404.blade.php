@@ -1,4 +1,4 @@
-@include('layout.head')
+@include('user.layout.head')
 
 <body>
     <script src="assets/static/js/initTheme.js"></script>

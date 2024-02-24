@@ -1,6 +1,6 @@
 @extends('landing-page.layout.main')
 
-@section('about')
+@section('content')
 
     {{-- ======= Features Section ======= --}}
     <section id="features" class="features">
@@ -21,19 +21,19 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="100">
                         <i class="ri-computer-line" style="color: #5578ff;"></i>
-                        <h3>Up to date</h3>
+                        <h3>Terbaru</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-6 mt-4 mt-md-0">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="150">
                         <i class="ri-computer-line" style="color: #e80368;"></i>
-                        <h3>Aman dan kompatible</h3>
+                        <h3>Aman dan kompatibel</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-6 mt-4 mt-lg-0">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="200">
                         <i class="ri-customer-service-line" style="color: #e361ff;"></i>
-                        <h3>Full Support 24/7</h3>
+                        <h3>Layanan 24/7</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-6 mt-4">
@@ -45,19 +45,19 @@
                 <div class="col-lg-3 col-md-4 col-6 mt-4">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="300">
                         <i class="ri-apps-line" style="color: #ffa76e;"></i>
-                        <h3>Anti detect system 99%</h3>
+                        <h3>Anti deteksi sistem 99%</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-6 mt-4">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="350">
                         <i class="ri-hashtag" style="color: #11dbcf;"></i>
-                        <h3>Encrypt Serial</h3>
+                        <h3>Enkripsi Serial</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-6 mt-4">
                     <div class="icon-box rounded-4 h-100" data-aos="zoom-in" data-aos-delay="400">
                         <i class="ri-chat-1-line" style="color: #4233ff;"></i>
-                        <h3>Group Chat</h3>
+                        <h3>Grup Anggota</h3>
                     </div>
                 </div>
             </div>
@@ -84,9 +84,9 @@
                         <ul>
                             <li class="fst-italic"><i class="ri-checkbox-circle-line"></i> Program selalu
                                 terupdate.</li>
-                            <li class="fst-italic"><i class="ri-checkbox-circle-line"></i> Anti detect system.
+                            <li class="fst-italic"><i class="ri-checkbox-circle-line"></i> Anti deteksi system.
                             </li>
-                            <li class="fst-italic"><i class="ri-checkbox-circle-line"></i> Encrypt serial.</li>
+                            <li class="fst-italic"><i class="ri-checkbox-circle-line"></i> Enkripsi serial.</li>
                         </ul>
                         {{-- <p>
                             Kami menjamin keamanan file cheat yang kami sediakan dari virus berbahaya. Saat file cheat
@@ -106,18 +106,13 @@
                         <h3>Fasilitas vvip mods</h3>
                         <p>
                             Setiap pembelian di VVIP MODS akan diberikan fasilitas Web Server untuk kemudahan member
-                            dalam
-                            mendownload tools cheat, file pendukung cheat, dan terutama untuk mengganti serial
-                            komputer/HWID saat
-                            berpindah PC.
+                            dalam mendownload tools cheat, file pendukung cheat, dan terutama untuk mengganti serial komputer/HWID saat berpindah PC.
                         </p>
-                        <h3>Bagaimana cara mengetahui serial number pc/laptop saya ?</h3>
+                        <h3>Bagaimana cara mengetahui serial pc/laptop saya ?</h3>
                         <p>
-                            Silahkan download program untuk mengecek serial HWID & Number melalui Web Server.
-                            Setelah terdownload,
-                            buka program dengan cara klik kanan run ass. Maka akan muncul Serial HWID/Number anda di
-                            notepad.
-                            Berikan serial tersebut ke seller.
+                            Silahkan unduh program untuk mengecek serial HWID & Number melalui Web Server.
+                            Setelah terunduh, buka program dengan cara klik kanan run as. Maka akan muncul Serial HWID/Serial anda di
+                            notepad. Berikan serial tersebut ke seller.
                         </p>
                     </div>
                 </div>
@@ -129,12 +124,12 @@
         {{-- ======= List Cheat Section ======= --}}
         <section id="list-cheat" class="features">
             <div class="container">
-    
+
                 <div class="section-title" data-aos="fade-up">
                     <h2>VVIP MODS</h2>
                     <p>LIST CHEAT YANG TERSEDIA</p>
                 </div>
-    
+
                 <div class="row mb-5" data-aos="fade-left">
                     <div class="col-lg-3 col-md-4 col-6">
                         <div class="icon-box d-flex justify-content-center rounded-4 h-100" data-aos="zoom-in"

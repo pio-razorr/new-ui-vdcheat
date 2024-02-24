@@ -19,16 +19,21 @@ class DataUserController extends Controller
         // Mendapatkan informasi pengguna yang sedang diautentikasi
         $authUser = Auth::user();
 
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
+
         // Inisialisasi variabel untuk menentukan role yang ingin diambil
         $rolesToFetch = ['resseler'];
 
         // Periksa peran pengguna yang saat ini diautentikasi
         if ($authUser->role == 'admin') {
             // Jika pengguna adalah admin, tambahkan 'resseler' ke roles yang akan diambil
-            $rolesToFetch[] = 'resseler';
-        } elseif ($authUser->role == 'ceo') {
-            // Jika pengguna adalah ceo, tambahkan 'resseler' dan 'admin' ke roles yang akan diambil
-            $rolesToFetch = ['resseler', 'admin'];
+            $rolesToFetch = ['resseler', 'resseler_vip'];
         }
 
         // Jika user login sebagai ceo, maka ambil semua data di tabel user
@@ -59,17 +64,11 @@ class DataUserController extends Controller
     {
         // Validasi Input
         $request->validate([
-
-            // Memastikan 'name' tidak boleh kosong
-            'name' => 'required',
-            // Memastikan 'username' tidak boleh kosong
-            'username' => 'required|unique:users,username', // Validasi unik untuk kolom 'username'
-            // Memastikan 'no_hp' tidak boleh kosong dan harus berupa angka
-            'no_hp' => 'required | numeric',
-            // Memastikan 'password' tidak boleh kosong
-            'password' => 'required',
-            // Memastikan 'role' tidak boleh kosong
-            'role' => 'required',
+            'name' => 'required', // Memastikan 'name' tidak boleh kosong
+            'username' => 'required|unique:users,username', // Memastikan 'username' tidak boleh kosong dan validasi unik untuk kolom 'username'
+            'no_hp' => 'required | numeric', // Memastikan 'no_hp' tidak boleh kosong dan harus berupa angka
+            'password' => 'required', // Memastikan 'password' tidak boleh kosong
+            'role' => 'required', // Memastikan 'role' tidak boleh kosong
         ]);
 
         // Mengambil waktu sekarang untuk dimasukkan ke kolom created_at
@@ -125,9 +124,9 @@ class DataUserController extends Controller
 
         $roleLabel = '';
 
-        if ($data->role == 'resseler' && $data->saldo <= 10000000) {
+        if ($data->role == 'resseler') {
             $roleLabel = 'Resseler';
-        } elseif ($data->role == 'resseler' && $data->saldo >= 10000000) {
+        } elseif ($data->role == 'resseler_vip') {
             $roleLabel = 'Resseler VIP';
         } elseif ($data->role == 'admin') {
             $roleLabel = 'Admin';
@@ -136,6 +135,14 @@ class DataUserController extends Controller
         }
 
         $authUser = Auth::user();
+
+        // Pengecekan apakah status akunnya dibanned
+        if ($authUser->status == 'banned') {
+            $errorMessage = 'Akun telah dibanned.';
+            // Jika ya, lakukan logout dan arahkan kembali ke halaman login
+            Auth::logout();
+            return redirect('/login')->withErrors(['login' => $errorMessage]);
+        }
 
         return view('user.ubah-user', compact('authUser', 'roleLabel'))->with('data', $data);
     }
@@ -177,6 +184,30 @@ class DataUserController extends Controller
         User::where('id', $id)->delete();
 
         // Redirect dengan pesan kesuksesan
-        return redirect('/data-user')->with('success', 'Berhasil hapus akun');
+        return redirect('/data-user')->with('success', 'Pengguna telah dihapus.');
+    }
+
+    public function banned(string $id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Perbarui status pengguna menjadi 'banned'
+        $user->update(['status' => 'banned']);
+
+        // Redirect kembali ke halaman data user dengan pesan sukses
+        return redirect('/data-user')->with('success', 'Pengguna berhasil di banned.');
+    }
+
+    public function unbanned(string $id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Perbarui status pengguna menjadi 'banned'
+        $user->update(['status' => 'unbanned']);
+
+        // Redirect kembali ke halaman data user dengan pesan sukses
+        return redirect('/data-user')->with('success', 'Pengguna berhasil di unbanned.');
     }
 }

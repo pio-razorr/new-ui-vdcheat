@@ -25,11 +25,14 @@ class User extends Authenticatable implements CanResetPassword
         'no_hp',
         'password',
         'role',
+        'status',
         'saldo',
         'transaksi',
         'point',
         'pendapatan',
         'created_by',
+        'instagram',
+        'facebook',
         'expired_date'
     ];
 

@@ -3,13 +3,15 @@
 use App\Http\Controllers\AktivasiUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataMemberController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransferSaldoController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LoginMemberController;
 use App\Http\Controllers\TestimoniController;
+use App\Http\Controllers\StatusGameController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +25,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
 // Tampilkan halaman landing home
 Route::get('/', [LandingController::class, 'index']);
 
-// Tampilkan halaman landing about
-Route::get('/about', [LandingController::class, 'about']);
+// Tampilkan halaman landing tentang
+Route::get('/tentang', [LandingController::class, 'tentang']);
 
 // Tampilkan halaman landing harga
 Route::get('/harga', [LandingController::class, 'harga']);
@@ -38,85 +43,60 @@ Route::get('/galeri', [LandingController::class, 'galeri']);
 // Tampilkan halaman landing testimoni
 Route::get('/testimoni', [LandingController::class, 'testimoni']);
 
-// Supaya saat user sudah login, maka tidak bisa kembali ke halaman login
-Route::middleware(['guest'])->group(function () {
 
-    // Tampilkan halaman login user
-    Route::get('/login', [LoginController::class, 'index_user'])->name('login');
 
-    // Untuk autentikasi di halaman login user
-    Route::post('/login', [LoginController::class, 'login_user']);
 
-    // Tampilkan halaman login member
-    Route::get('/login-member', [LoginController::class, 'index_member']);
 
-    // Untuk autentikasi di halaman login member 
-    Route::post('/login-member', [LoginController::class, 'login_member']);
+Route::middleware('member.not.allowed', 'guest.user')->group(function () {
+
+    // Menampilkan halaman login user
+    Route::get('/login', [LoginUserController::class, 'index']);
 });
+
+// Untuk autentikasi di halaman login user
+Route::post('/login', [LoginUserController::class, 'login']);
+
+
+
+
+include __DIR__ . '/user.php';
+
+
+
+
+// Autentikasi login member
+Route::post('/login-member', [LoginMemberController::class, 'login']);
+
+Route::middleware('user.not.allowed', 'guest.member')->group(function () {
+
+    // Menampilkan halaman login member
+    Route::get('/login-member', [LoginMemberController::class, 'index'])->name('login');
+});
+
+
+
+Route::middleware(['auth:member'])->group(function () {
+
+    // Menampilkan halaman dashboard member
+    Route::resource('/dashboard-member', MemberController::class);
+
+    // Resource member
+    Route::resource('/member', MemberController::class);
+});
+
+
+
+
+// Untuk user logout
+Route::get('/logout', [LoginUserController::class, 'logout'])->name('user.logout');
+Route::get('/logout-member', [LoginMemberController::class, 'logout'])->name('member.logout');
+
 
 
 Route::get('/home', function () {
     return redirect('/dashboard');
 });
 
-
-// Supaya saat user tidak login maka tidak bisa mengakses halaman dashboard
-Route::middleware(['auth:web,member'])->group(function () {
-
-    // Menampilkan halaman dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-
-    // Menampilkan halaman dashboard member
-    Route::resource('/dashboard-member', MemberController::class);
-
-    // Menampilkan halaman transaksi
-    Route::resource('/transaksi', TransaksiController::class);
-
-    // Menampilkan halaman transfer saldo
-    Route::resource('/transfer-saldo', TransferSaldoController::class);
-
-    // Menampilkan halaman transfer saldo
-    Route::resource('/aktivasi-user', AktivasiUserController::class);
-
-    // Menampilkan halaman kompensasi
-    Route::get('/kompensasi', [DashboardController::class, 'kompensasi']);
-
-    // Menampilkan halaman data member
-    Route::resource('/data-member', DataMemberController::class);
-
-    // Menampilkan halaman ubah serial member
-    Route::resource('/ubah-serial', DataMemberController::class);
-
-    // Menampilkan halaman data user
-    Route::resource('/data-user', DataUserController::class);
-
-    // Menampilkan halaman ubah user
-    Route::resource('/ubah-user', DataUserController::class);
-
-    // Menampilkan halaman tukar point
-    Route::get('/tukar-point', [DashboardController::class, 'tukar_point']);
-    Route::post('/tukar-point', [DashboardController::class, 'proses_tukar_point']);
-
-    // Menampilkan halaman redeem voucher
-    Route::get('/redeem-voucher', [DashboardController::class, 'redeem_voucher']);
-
-    // Menampilkan halaman testimoni
-    Route::get('/data-testimoni', [TestimoniController::class, 'index']);
-    Route::get('/tambah-testimoni', [TestimoniController::class, 'create']);
-    Route::post('/tambah-testimoni', [TestimoniController::class, 'store']);
-    Route::delete('/data-testimoni/{id}', [TestimoniController::class, 'destroy'])->name('images.destroy');
-
-
-    // Menampilkan halaman ganti password
-    Route::get('/ganti-password', [DashboardController::class, 'ganti_password']);
-    Route::post('/ganti-password', [DashboardController::class, 'proses_ganti_password']);
-
-    // Untuk user logout
-    Route::get('/logout', [LoginController::class, 'logout']);
-
-    // Resource member
-    Route::resource('member', MemberController::class);
-});
 
 Route::any('{any?}', function () {
     return view('404');

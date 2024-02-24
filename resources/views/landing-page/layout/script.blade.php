@@ -17,6 +17,8 @@
 <!-- Main JS File -->
 <script src="{{ asset('assets-landing/js/main.js') }}"></script>
 
+
+
 <!-- Inisialisasi Datatable -->
 <script>
     $(document).ready(function() {
@@ -35,6 +37,8 @@
         cell.textContent = index + 1;
     });
 </script>
+
+
 
 <!-- Sweet alert -->
 <script>
@@ -64,10 +68,12 @@
     document.addEventListener("DOMContentLoaded", showPromoAlert);
 </script>
 
+
+
 <script>
     // Ambil bagian halaman setelah domain
     var path = window.location.pathname;
-    
+
     // Ubah menjadi huruf kapital
     var pageTitle = path.charAt(1).toUpperCase() + path.slice(2);
 
