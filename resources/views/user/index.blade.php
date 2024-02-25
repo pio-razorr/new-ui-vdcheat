@@ -509,44 +509,6 @@
                     </div>
                     {{-- END STATUS CHEAT --}}
 
-                    {{-- RIWAYAT TRANSAKSI --}}
-                    {{-- <div class="card" data-aos="zoom-in" data-aos-duration="2500">
-                    <div class="card-header">
-                        <h4 class="card-title">Riwayat terakhir</h4>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-body pt-0">
-                            <div class="list-group">
-
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Game</th>
-                                            <th>Paket</th>
-                                            <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
-                                            <th>Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($historyTransaksis as $historyTransaksi)
-                                            <tr>
-                                                <td>{{ $historyTransaksi->name }}</td>
-                                                <td>{{ $historyTransaksi->game }}</td>
-                                                <td>{{ $historyTransaksi->paket }}</td>
-                                                <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
-                                                <td>{{ $historyTransaksi->created_at }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                    {{-- END RIWAYAT TRANSAKSI --}}
-
                 </div>
             </div>
 
@@ -555,18 +517,18 @@
                 <div class="col">
                     <div class="card" data-aos="zoom-in" data-aos-duration="2500">
                         {{-- <div class="card-header mb-0">
-                        <h4 class="card-title">Riwayat Transaksi</h4>
-                    </div> --}}
+                            <h4 class="card-title">Riwayat Transaksi</h4>
+                        </div> --}}
                         <div class="card-content">
                             <div class="card-body">
                                 @if (count($historyTransaksis) > 0)
                                     <h4>Riwayat Transaksi</h4>
                                     {{-- <p class="card-text">Using the most basic table up, here’s how
-                                    <code>.table</code>-based tables look in Bootstrap. You can use any
-                                    example
-                                    of below table for your table and it can be use with any type of
-                                    bootstrap tables.
-                                </p> --}}
+                                        <code>.table</code>-based tables look in Bootstrap. You can use any
+                                        example
+                                        of below table for your table and it can be use with any type of
+                                        bootstrap tables.
+                                    </p> --}}
                                     <!-- Table with outer spacing -->
                                     <div class="table-responsive">
                                         <table class="table table-lg" id="history-transaksi">

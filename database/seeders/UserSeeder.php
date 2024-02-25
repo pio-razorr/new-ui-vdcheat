@@ -71,6 +71,6 @@ class UserSeeder extends Seeder
         }
 
         // Tambah data sebanyak 50 secara acak
-        User::factory()->count(28)->create();
+        User::factory()->count(103)->create();
     }
 }

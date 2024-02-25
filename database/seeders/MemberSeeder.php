@@ -29,6 +29,6 @@ class MemberSeeder extends Seeder
         );
 
         // Tambah data sebanyak 50 secara acak
-        Member::factory()->count(37)->create();
+        Member::factory()->count(217)->create();
     }
 }
