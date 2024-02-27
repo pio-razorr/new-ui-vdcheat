@@ -98,8 +98,6 @@ class DashboardController extends Controller
 
         // Hitung sisa saldo dan update nilai total point
         $nominalTukar = $request->input('nominal_tukar');
-        $sisaSaldo = $authUser->saldo + $authUser->point;
-
 
         // Periksa apakah pengguna memiliki point sebelum mencoba menukar point
         if ($authUser->point > 0) {

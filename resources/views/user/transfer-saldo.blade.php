@@ -17,6 +17,9 @@
                         <p class="card-text">
                             2. Pastikan username tujuan sesuai.
                         </p>
+                        <p class="card-text">
+                            3. Minimal transfer saldo adalah 1 juta.
+                        </p>
 
                         <hr>
 

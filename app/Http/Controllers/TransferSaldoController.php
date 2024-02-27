@@ -97,23 +97,14 @@ class TransferSaldoController extends Controller
         // Cari pengguna berdasarkan username
         $userTujuan = User::where('username', $request->input('username'))->first();
 
-        // Jika pengguna dengan 'username' tujuan tidak ditemukan, kembalikan dengan pesan kesalahan
-        // if (!$userTujuan) {
-        //     return redirect('/transfer-saldo')->with('errors', 'Username yang dituju tidak tersedia.')->withInput();
-        // }
-
         // Validasi Input
         $request->validate([
             'username' => 'required',
-            'saldo' => 'required | numeric',
+            'saldo' => 'required | numeric | min:50000 | max:1000000',
+        ], [
+            'saldo.min' => 'Minimal transfer saldo adalah 50.000.',
+            'saldo.max' => 'Maximal transfer saldo adalah 1 juta.'
         ]);
-
-        // $request->validate([
-        //     'username' => 'required',
-        //     'saldo' => 'required|numeric|min:50000',
-        // ], [
-        //     'saldo.min' => 'Nominal transfer saldo minimal Rp. 50.000',
-        // ]);
 
         // Tambahkan saldo ke pengguna tujuan
         $nominalTransfer = $request->input('saldo');
